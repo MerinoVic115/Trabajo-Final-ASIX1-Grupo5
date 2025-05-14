@@ -1,17 +1,17 @@
 <?php
 session_start();
-include "../../conexion/conexion.php";
+include "../conexion/conexion.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recibir y limpiar datos
-    $nombre = $_POST['r_nombre'];
-    $correo = $_POST['r_email'];
-    $contra1 = $_POST['r_pwd'];
-    $contra2 = $_POST['r_confirmPwd'];
+    $nombre = $_POST['user'];
+    $correo = $_POST['email'];
+    $contra1 = $_POST['passwd'];
+    $contra2 = $_POST['passwd2'];
     $error = false;
 
     // Verificar si el usuario ya existe
-    $sql = "SELECT id_personal FROM personal_vet WHERE nom_personal = ?";
+    $sql = "SELECT id FROM usuarios WHERE username = ?";
     $sentencia1 = mysqli_prepare($conn, $sql);
 
     if ($sentencia1) {
@@ -32,21 +32,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar si las contraseñas coinciden
     if ($contra1 !== $contra2) {
         $_SESSION['error'] = "Las contraseñas no coinciden.";
-        header("Location: ../../views/login.html");
+        header("Location:../login.php");
         exit();
     }
 
     // Validar la contraseña
     if (!preg_match('/^(?=.*[A-Z])(?=.*\d).{8,}$/', $contra1)) {
         $_SESSION['error'] = "La contraseña debe tener al menos 8 caracteres, 1 mayúscula y 1 número.";
-        header("Location: ../../views/login.html");
+        header("Location: ./login.php");
         exit();
     }
 
     // Si no hay errores, insertar el usuario
     if (!$error) {
         $cifrado = password_hash($contra1, PASSWORD_DEFAULT);
-        $query1 = "INSERT INTO personal_vet (nom_personal, email_personal, contra_personal) VALUES (?, ?, ?)";
+        $query1 = "INSERT INTO usuarios(username, email, password) VALUES (?, ?, ?)";
         $sentencia1 = mysqli_prepare($conn, $query1);
 
         if ($sentencia1) {
@@ -64,11 +64,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Redirecciones según resultado
     if ($error) {
-        header("Location: ../views/register.php?error=1");
+        header("Location: ../view/register.php?error=1");
     } else {
-        header("Location: ../../views/login.html?success=1");
-    }
+        header("Location: ../view/login.php?success=1");
+    } 
 }
 
+
+
+
 mysqli_close($conn);
+?>
+
 ?>
