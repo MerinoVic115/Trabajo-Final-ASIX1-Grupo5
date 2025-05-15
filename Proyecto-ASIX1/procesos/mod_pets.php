@@ -1,13 +1,14 @@
 <!-- Modificación Mascotas - Consultas para inserción en la BBDD -->
-
+ 
 <?php
 include "../conexion/conexion.php";
 // session_start();
 
 // // Verificar si el usuario está autenticado
-// if (!isset($_SESSION['usuario'])) {
-//     header("Location: ../index.php"); // arreglar sesion(posible error esta en $_SESSION) 
-// }
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 
 // Verificar si se ha recibido un ID válido
 if (!isset($_GET['Chip'])) {
@@ -44,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">

@@ -3,7 +3,7 @@
 session_start();
 
 // Verificamos si el usuario está logueado
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: ../views/login.php");
     exit();
 }
@@ -12,14 +12,14 @@ if (!isset($_SESSION['user_id'])) {
 include "../conexion/conexion.php";
 
 // Consulta para obtener los veterinarios
-$query = "SELECT id_historial, observacion_his, fecha-entrada_his, fecha-salida_his, ingresado_his FROM historial";
+$query = "SELECT `id_historial`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his` FROM historial";
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
 $historial = [];
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $veterinario[] = $row;
+        $historial[] = $row;
     }
 }
 ?>
@@ -30,12 +30,49 @@ if ($result && mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial - Vetis</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #2196F3;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
     <body>
     <nav>
         <div style="padding: 10px; background: #f1f1f1;">
-            Bienvenido, <?php echo $_SESSION['user_name'] ?? 'Usuario'; ?>
+            Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
             <a href="../procesos/logout.php" style="float: right;">Cerrar sesión</a>
         </div>
     </nav>
@@ -77,7 +114,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     </table>
 
     <div style="margin-top: 20px;">
-        <a href="../procesos/crear-histo.php">
+        <a href="../procesos/crear_histo.php">
             <button type="button">Registrar un historial</button>
         </a>
     </div>

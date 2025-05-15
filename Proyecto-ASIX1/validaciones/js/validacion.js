@@ -83,6 +83,306 @@ function r_validarconfirmPwd() { // Validación confirmación de contraseña en 
 
 
 
+// MASCOTAS
+
+// Validaciones Creación Mascotas
+
+function validarNombreMascota() {
+    let nombre = document.getElementById('nombre').value;
+    let error = document.getElementById('errorNombreMascota');
+    if (!nombre || nombre.length < 2) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 2 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarSexoMascota() {
+    let sexo = document.getElementById('sexo').value;
+    let error = document.getElementById('errorSexoMascota');
+    if (!sexo) {
+        error.innerHTML = "El sexo es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (sexo !== "Macho" && sexo !== "Hembra") {
+        error.innerHTML = "El sexo debe ser 'M' para Macho o 'H' para Hembra.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarFechaMascota() {
+    let fecha = document.getElementById('fecha').value;
+    let error = document.getElementById('errorFechaMascota');
+    if (!fecha) {
+        error.innerHTML = "La fecha de nacimiento es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    let fechaIngresada = new Date(fecha);
+    if (fechaIngresada.getFullYear() < 2001) {
+        error.innerHTML = "La fecha no puede ser anterior a 2001.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEspecieMascota() {
+    let especie = document.getElementById('especie').value;
+    let error = document.getElementById('errorEspecieMascota');
+    if (!especie) {
+        error.innerHTML = "La especie es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    if (especie.length < 3) {
+        error.innerHTML = "La especie debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarRazaMascota() {
+    let raza = document.getElementById('raza').value;
+    let error = document.getElementById('errorRazaMascota');
+    if (!raza) {
+        error.innerHTML = "La raza es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    
+    error.innerHTML = "";
+    return true;
+}
+
+function validarPropietarioMascota() {
+    let propietario = document.getElementById('propietario').value;
+    let error = document.getElementById('errorPropietarioMascota');
+    if (!propietario) {
+        error.innerHTML = "El propietario es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+
+    error.innerHTML = "";
+    return true;
+}
+
+function validarVeterinarioMascota() {
+    let veterinario = document.getElementById('veterinario').value;
+    let error = document.getElementById('errorVeterinarioMascota');
+    if (!veterinario) {
+        error.innerHTML = "El veterinario es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    
+    error.innerHTML = "";
+    return true;
+}
 
 
-// Validaciones restantes necesarias
+// Validaciones Modificación Mascotas
+
+function validarNombreMascotaMod() {
+    let nombre = document.getElementById('mod_nombre').value;
+    let error = document.getElementById('errorModNombreMascota');
+    if (!nombre || nombre.length < 2) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 2 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarSexoMascotaMod() {
+    let sexo = document.getElementById('mod_sexo').value;
+    let error = document.getElementById('errorModSexoMascota');
+    if (!sexo) {
+        error.innerHTML = "El sexo es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEspecieMascotaMod() {
+    let especie = document.getElementById('mod_especie').value;
+    let error = document.getElementById('errorModEspecieMascota');
+    if (!especie) {
+        error.innerHTML = "La especie es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarRazaMascotaMod() {
+    let raza = document.getElementById('mod_raza').value;
+    let error = document.getElementById('errorModRazaMascota');
+    if (!raza) {
+        error.innerHTML = "La raza es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+
+
+
+// VETERINARIOS
+
+// Validaciones Creación Veterinarios
+
+function validarNombreVet() {
+    let nombre = document.getElementById('vet_nombre').value;
+    let error = document.getElementById('errorNombreVet');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarTelefonoVet() {
+    let tel = document.getElementById('vet_telefono').value;
+    let error = document.getElementById('errorTelefonoVet');
+    if (!tel) {
+        error.innerHTML = "El teléfono es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEspecialidadVet() {
+    let esp = document.getElementById('vet_especialidad').value;
+    let error = document.getElementById('errorEspecialidadVet');
+    if (!esp) {
+        error.innerHTML = "La especialidad es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarFechaContratoVet() {
+    let fecha = document.getElementById('vet_fecha_contrato').value;
+    let error = document.getElementById('errorFechaContratoVet');
+    if (!fecha) {
+        error.innerHTML = "La fecha de contrato es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarSalarioVet() {
+    let salario = document.getElementById('vet_salario').value;
+    let error = document.getElementById('errorSalarioVet');
+    if (!salario) {
+        error.innerHTML = "El salario es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+
+// Validaciones Modificación Veterinarios
+
+function validarNombreVetMod() {
+    let nombre = document.getElementById('mod_vet_nombre').value;
+    let error = document.getElementById('errorModNombreVet');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarTelefonoVetMod() {
+    let tel = document.getElementById('mod_vet_telefono').value;
+    let error = document.getElementById('errorModTelefonoVet');
+    if (!tel) {
+        error.innerHTML = "El teléfono es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEspecialidadVetMod() {
+    let esp = document.getElementById('mod_vet_especialidad').value;
+    let error = document.getElementById('errorModEspecialidadVet');
+    if (!esp) {
+        error.innerHTML = "La especialidad es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarFechaContratoVetMod() {
+    let fecha = document.getElementById('mod_vet_fecha_contrato').value;
+    let error = document.getElementById('errorModFechaContratoVet');
+    if (!fecha) {
+        error.innerHTML = "La fecha de contrato es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarSalarioVetMod() {
+    let salario = document.getElementById('mod_vet_salario').value;
+    let error = document.getElementById('errorModSalarioVet');
+    if (!salario) {
+        error.innerHTML = "El salario es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+
+
+// HISTORIAL
+
+// Validaciones Creación Historial
+
+function 
+
+// Validaciones Modificación Historial
+

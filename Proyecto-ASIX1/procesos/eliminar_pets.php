@@ -18,7 +18,7 @@ if (isset($_GET['Chip']) && !empty($_GET['Chip'])) {
 
     if ($resultado_mascota) {
         echo "<p>Mascota eliminada correctamente.</p>";
-        header("Location: ../views/principal.php");
+        header("Location: ../views/mascotas.php"); // Redirigir a la página de mascotas
         exit(); // Detenemos la ejecución después de redirigir
     } else {
         echo "<p>Error al eliminar la mascota: " . mysqli_error($conn) . "</p>";

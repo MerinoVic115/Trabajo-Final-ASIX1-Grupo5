@@ -75,7 +75,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <nav>
         <div style="padding: 10px; background: #f1f1f1;">
             Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
-            <a href="../procesos/logout.php" style="float: right;">Cerrar sesión</a>
+            <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
         </div>
     </nav>
     
@@ -117,10 +117,26 @@ if ($result && mysqli_num_rows($result) > 0) {
     </table>
 
     <div style="margin-top: 20px;">
-        <a href="../procesos/crear-pets.php">
-            <button type="button">Registrar una mascota</button>
+        <a href="../procesos/crear_pets.php">
+            <button type="submit">Registrar una mascota</button>
         </a>
     </div>
+
+
+        <hr>
+
+    <div style="margin-top: 20px;">
+        <a href="./veterinarios.php">
+            <button type="button">Ver veterinarios</button>
+        </a>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="./historial.php">
+            <button type="button">Ver historial</button>
+        </a>
+    </div>
+                
     
 </body>
 </html>

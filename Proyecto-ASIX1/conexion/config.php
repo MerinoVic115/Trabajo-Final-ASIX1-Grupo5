@@ -6,6 +6,4 @@ $username = "root";
 $password = "";
 $dbname = "db_perriatra";
 
-
-
 ?>

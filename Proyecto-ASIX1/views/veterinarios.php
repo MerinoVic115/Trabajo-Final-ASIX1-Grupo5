@@ -30,6 +30,43 @@ if ($result && mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veterinarios - Vetis</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #2196F3;
+        }
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
     <body>
@@ -63,8 +100,8 @@ if ($result && mysqli_num_rows($result) > 0) {
                         <td><?= date('d/m/Y', strtotime($veterinario['Fecha_Contrato'])); ?></td>
                         <td><?= $veterinario['Salario']; ?></td>
                         <td class="actions">
-                            <a href="../procesos/modificar.php?Id_Vet=<?= $veterinario['Id_Vet']; ?>">Modificar</a>
-                            <a href="../procesos/eliminar.php?Id_Vet=<?= $veterinario['Id_Vet']; ?>" 
+                            <a href="../procesos/mod_vet.php?Id_Vet=<?= $veterinario['Id_Vet']; ?>">Modificar</a>
+                            <a href="../procesos/eliminar_vet.php?Id_Vet=<?= $veterinario['Id_Vet']; ?>" 
                                onclick="return confirm('¿Estás seguro de que deseas eliminar a este veterinario?');">
                                Eliminar
                             </a>
@@ -80,7 +117,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     </table>
 
     <div style="margin-top: 20px;">
-        <a href="../procesos/crear-vet.php">
+        <a href="../procesos/crear_vet.php">
             <button type="button">Registrar un veterinario</button>
         </a>
     </div>

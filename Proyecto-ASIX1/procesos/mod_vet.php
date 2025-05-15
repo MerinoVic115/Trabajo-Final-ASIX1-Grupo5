@@ -1,4 +1,51 @@
+<!-- Modificación Veterinario - Consultas para la inserción en la BBDD -->
 <?php
+include "../conexion/conexion.php";
+// session_start();
+
+// // Verificar si el usuario está autenticado
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
+// Verificar si se ha recibido un ID válido
+if (!isset($_GET['Id_Vet'])) {
+    echo "ID de veterinario no válido.";
+    exit();
+}
+
+$id = mysqli_real_escape_string($conn, $_GET['Id_Vet']);
+
+// Obtener datos de la mascota
+$sql = "SELECT * FROM veterianario WHERE Id_Vet = $id";
+$result = mysqli_query($conn, $sql);
+$veterinario = mysqli_fetch_assoc($result);
+
+if (!$veterinario) {
+    echo "Veterinario no encontrada.";
+    exit();
+}
+
+// Procesar el formulario si se envía
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = $_POST['Nombre'];
+    $telf = $_POST['Telefono'];
+    $especialidad = $_POST['Especialidad'];
+    $fechcontrato = $_POST['Fecha_Contrato'];
+    $salario = $_POST['Salario'];
+
+
+    $update_sql = "UPDATE veterinario SET Nombre = '$nombre', Telefono = '$telf', Especialidad = '$especialidad', `Fecha_Contrato` = '$fechcontrato', Salario = '$salario' WHERE Id_Vet = $id";
+    if (mysqli_query($conn, $update_sql)) {
+        echo "Datos actualizados correctamente.";
+        header("Location:   ../views/vetirnarios.php"); // Redirigir a una página de éxito
+        exit();
+    } else {
+        echo "Error al actualizar los datos: " . mysqli_error($conn);
+    }
+}
+?>
 
 ?>
 
