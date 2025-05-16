@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si no hay errores, insertar el usuario
     if (!$error) {
         $cifrado = password_hash($contra1, PASSWORD_DEFAULT);
-        $query1 = "INSERT INTO personal_vet (nom_personal, email_personal, contra_personal) VALUES (?, ?, ?)";
+        $query1 = "INSERT INTO personal (nom_personal, email_personal, contra_personal) VALUES (?, ?, ?)";
         $sentencia1 = mysqli_prepare($conn, $query1);
 
         if ($sentencia1) {

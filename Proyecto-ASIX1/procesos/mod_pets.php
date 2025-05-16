@@ -2,7 +2,7 @@
  
 <?php
 include "../conexion/conexion.php";
-// session_start();
+session_start();
 
 // // Verificar si el usuario está autenticado
 if (!isset($_SESSION['username'])) {
@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
     $sexo = mysqli_real_escape_string($conn, $_POST['genero']);
     $especie = mysqli_real_escape_string($conn, $_POST['especie']);
-    $raza = mysqli_real_escape_string($conn, $_POST['raza']);
+    // $raza = mysqli_real_escape_string($conn, $_POST['raza']);
 
-    $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Especie = '$especie', Raza = '$raza' WHERE Chip = $id";
+    $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Especie = '$especie',      WHERE Chip = $id";
     if (mysqli_query($conn, $update_sql)) {
         echo "Datos actualizados correctamente.";
         header("Location:   ../views/mascotas.php"); // Redirigir a una página de éxito
@@ -80,8 +80,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <br>
     
     <label>Raza:</label>
-    <input type="text" name="raza" value="<?php echo $mascota['Raza']; ?>">
-    <br>
+<select id="Raza" name="raza" required>
+        <option value="">Seleccionar raza: </option>
+        <?php
+        $sql = "SELECT $id Nombre FROM raza";
+        $result = mysqli_query($conn, $sql);
+        $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        foreach ($listamasc as $lm) {
+            echo "<option value='{$lm['Chip']}'>{$lm['Nombre']}</option>";
+        }
+        ?>
+    </select>    <br>
     
     <button type="submit">Guardar cambios</button>
 </form>  

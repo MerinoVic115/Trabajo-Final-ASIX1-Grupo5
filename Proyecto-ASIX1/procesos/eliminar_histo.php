@@ -2,6 +2,10 @@
 
 <?php
 
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 
 include "../conexion/conexion.php";
 
@@ -10,6 +14,7 @@ if (isset($_GET['id_historial']) && !empty($_GET['id_historial'])) {
 
     // Eliminamos el historial
     $sql_eliminar_histo = "DELETE FROM historial WHERE id_historial = ?";
+    
     $stmt_histo = mysqli_prepare($conn, $sql_eliminar_histo);
     mysqli_stmt_bind_param($stmt_histo, "i", $id_historial);
 

@@ -11,8 +11,20 @@ if (!isset($_SESSION['username'])) {
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
-// Consulta para obtener los veterinarios
-$query = "SELECT `id_historial`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his` FROM historial";
+// Consulta para obtener cada historial junto con el nombre de la mascota asociada
+// $query = "SELECT h.id_historial, h.observacion_his, h.`fecha-entrada_his`, h.`fecha-salida_his`, h.ingresado_his,
+//           m.Nombre AS nombre_mascota
+//           FROM historial h
+//           LEFT JOIN mascota m ON h.Mascota_Chip = m.Chip";
+
+
+$query = "SELECT h.id_historial, h.observacion_his, h.`fecha-entrada_his`, h.`fecha-salida_his`, h.ingresado_his,
+    m.Nombre AS nombre_mascota,
+    v.Nombre AS nombre_veterinario
+    FROM historial h
+    LEFT JOIN mascota m ON h.fk_mascota = m.Chip
+    LEFT JOIN veterinario v ON m.veterinario = v.Id_Vet";
+
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
@@ -68,12 +80,11 @@ if ($result && mysqli_num_rows($result) > 0) {
         }
     </style>
 </head>
-
-    <body>
+<body>
     <nav>
         <div style="padding: 10px; background: #f1f1f1;">
             Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
-            <a href="../procesos/logout.php" style="float: right;">Cerrar sesión</a>
+            <a href="logout.php" style="float: right;">Cerrar sesión</a>
         </div>
     </nav>
     
@@ -82,20 +93,25 @@ if ($result && mysqli_num_rows($result) > 0) {
     <table>
         <thead>
             <tr>
+                <th>Mascota</th>
                 <th>Observaciones</th>
+                <th>Veterinario asignado</th>
                 <th>Fecha Entrada</th>
                 <th>Fecha Salida</th>
                 <th>Ingresado</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php if (!empty($historial)): ?>
                 <?php foreach ($historial as $histo): ?>
                     <tr>
-                        <td><?= $histo['observacion_his']; ?></td>
+                        <td><?= htmlspecialchars($histo['nombre_mascota'] ?? ''); ?></td>
+                        <td><?= htmlspecialchars($histo['observacion_his']); ?></td>
+                        <td><?= htmlspecialchars($histo['nombre_veterinario'] ?? ''); ?></td>
                         <td><?= date('d/m/Y', strtotime($histo['fecha-entrada_his'])); ?></td>
                         <td><?= date('d/m/Y', strtotime($histo['fecha-salida_his'])); ?></td>
-                        <td><?= $histo['ingresado_his']; ?></td>
+                        <td><?= htmlspecialchars($histo['ingresado_his']); ?></td>
                         <td class="actions">
                             <a href="../procesos/mod_histo.php?id_historial=<?= $histo['id_historial']; ?>">Modificar</a>
                             <a href="../procesos/eliminar_histo.php?id_historial=<?= $histo['id_historial']; ?>" 
@@ -107,7 +123,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5" style="text-align: center;">No hay historiales registrados</td>
+                    <td colspan="6" style="text-align: center;">No hay historiales registrados</td>
                 </tr>
             <?php endif; ?>
         </tbody>
@@ -116,6 +132,9 @@ if ($result && mysqli_num_rows($result) > 0) {
     <div style="margin-top: 20px;">
         <a href="../procesos/crear_histo.php">
             <button type="button">Registrar un historial</button>
+        </a>
+        <a href="principal.php">
+            <button type="button">Volver a la pagina principal</button>
         </a>
     </div>
     

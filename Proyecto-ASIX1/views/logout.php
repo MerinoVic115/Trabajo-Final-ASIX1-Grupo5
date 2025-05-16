@@ -1,6 +1,7 @@
 <?php
-session_destroy();
-header("Location: ../index.php");
-mysqli_close($conn);
+session_start();
+session_unset(); // Borra todas las variables de sesión
+session_destroy(); // Destruye la sesión
+header("Location: ./login.php"); // Redirige al login
 exit();
 ?>

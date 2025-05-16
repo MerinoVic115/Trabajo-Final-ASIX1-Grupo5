@@ -3,6 +3,11 @@ include "../conexion/conexion.php";
 
 $error = false;
 
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Capturar los datos del formulario
     $nombre = $_POST['nombre'];

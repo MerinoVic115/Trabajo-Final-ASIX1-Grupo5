@@ -2,7 +2,7 @@
  
 <?php
 include "../conexion/conexion.php";
-// session_start();
+session_start();
 
 // // Verificar si el usuario está autenticado
 if (!isset($_SESSION['username'])) {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $update_sql = "UPDATE historial SET observacion_his = '$observacion', `fecha-entrada_his` = '$fecha_entrada', `fecha-salida_his` = '$fecha_salida', ingresado_his = '$ingresado' WHERE id_historial = $id";
     if (mysqli_query($conn, $update_sql)) {
-        header("Location: ../views/historiales.php"); // Redirigir a una página de éxito
+        header("Location: ../views/historial.php"); // Redirigir a una página de éxito
         exit();
     } else {
         echo "Error al actualizar los datos: " . mysqli_error($conn);
@@ -60,26 +60,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="logo-title">
         <h2>Modificar historial</h2>
     </div>
-    <a href="../views/historiales.php"><button>Atrás</button></a>
+    <a href="../views/historial.php"><button>Atrás</button></a>
 </div>
 
 <form action="" method="post">
     <input type="hidden" name="id" value="<?php echo $id; ?>">
     
     <label>Observación:</label>
-    <input type="text" name="observacion_his" value="<?php echo $historial['observacion_his']; ?>" required>
+    <input type="text" name="observacion_his" value="<?php echo $historial['observacion_his']; ?>">
     <br>
     
     <label>Fecha de entrada:</label>
-    <input type="date" name="fecha_entrada_his" value="<?php echo $historial['fecha-entrada_his']; ?>" required>
+    <input type="date" name="fecha_entrada_his" value="<?php echo $historial['fecha-entrada_his']; ?>" onblur="modFechaEntradaHis()">
     <br>
     
     <label>Fecha de salida:</label>
-    <input type="date" name="fecha_salida_his" value="<?php echo $historial['fecha-salida_his']; ?>">
+    <input type="date" name="fecha_salida_his" value="<?php echo $historial['fecha-salida_his']; ?>" onblur="modFechaSalidaHis()">
     <br>
     
     <label>Ingresado:</label>
-    <select name="ingresado_his" required>
+    <select name="ingresado_his" required onblur="validarIngresadoHis()">
         <option value="">Selecciona una opción</option>
         <option value="Sí" <?php if ($historial['ingresado_his'] == "Sí") echo "selected"; ?>>Sí</option>
         <option value="No" <?php if ($historial['ingresado_his'] == "No") echo "selected"; ?>>No</option>

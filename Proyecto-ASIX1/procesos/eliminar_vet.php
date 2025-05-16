@@ -4,6 +4,11 @@
 
 include "../conexion/conexion.php";
 
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
+
 if (isset($_GET['Id_Vet']) && !empty($_GET['Id_Vet'])) {
     $idvet = $_GET['Id_Vet'];
 

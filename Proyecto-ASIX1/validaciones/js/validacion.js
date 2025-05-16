@@ -8,18 +8,19 @@ function r_validarNombre() { // Validación nombre de usuario en el registro
         errornombre_r.innerHTML = "El nombre es obligatorio.";
         errornombre_r.style.color = "red";
         return false;
-    } else if (nombre_r.length < 3) {
+    }
+    if (nombre_r.length < 3) {
         errornombre_r.innerHTML = "El nombre debe tener como mínimo 3 carácteres.";
         errornombre_r.style.color = "red";
         return false;
-    } else if (/\d/.test(nombre_r)) {
+    }
+    if (/\d/.test(nombre_r)) {
         errornombre_r.innerHTML = "El nombre no puede tener números.";
         errornombre_r.style.color = "red";
         return false;
-    } else {
-        errornombre_r.innerHTML = "";
-        return true;
     }
+    errornombre_r.innerHTML = "";
+    return true;
 }
 
 function r_validarEmail() { // Validación email en el registro
@@ -30,14 +31,14 @@ function r_validarEmail() { // Validación email en el registro
         erroremail_r.innerHTML = "El email es obligatorio.";
         erroremail_r.style.color = "red";
         return false;
-    } else if (!/^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,10}$/.test(email_r)) {
+    }
+    if (!/^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,10}$/.test(email_r)) {
         erroremail_r.innerHTML = "El formato no es válido.";
         erroremail_r.style.color = "red";
         return false;
-    } else {
-        erroremail_r.innerHTML = "";
-        return true;
     }
+    erroremail_r.innerHTML = "";
+    return true;
 }
 
 function r_validarPwd() { // Validación contraseña en el registro
@@ -48,18 +49,19 @@ function r_validarPwd() { // Validación contraseña en el registro
         errorpwd_r.innerHTML = "La contraseña es obligatoria.";
         errorpwd_r.style.color = "red";
         return false;
-    } else if (pwd_r.length < 8) {
+    }
+    if (pwd_r.length < 8) {
         errorpwd_r.innerHTML = "La contraseña debe tener al menos 8 caracteres.";
         errorpwd_r.style.color = "red";
         return false;
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(pwd_r)) {
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/.test(pwd_r)) {
         errorpwd_r.innerHTML = "La contraseña debe tener al menos una mayúscula y un número.";
         errorpwd_r.style.color = "red";
         return false;
-    } else {
-        errorpwd_r.innerHTML = "";
-        return true;
     }
+    errorpwd_r.innerHTML = "";
+    return true;
 }
 
 function r_validarconfirmPwd() { // Validación confirmación de contraseña en el registro
@@ -71,16 +73,15 @@ function r_validarconfirmPwd() { // Validación confirmación de contraseña en 
         errorconfirmpwd_r.innerHTML = "La confirmación de la contraseña es obligatoria.";
         errorconfirmpwd_r.style.color = "red";
         return false;
-    } else if (pwd_r !== confirmpwd_r) {
+    }
+    if (pwd_r !== confirmpwd_r) {
         errorconfirmpwd_r.innerHTML = "Las contraseñas no coinciden.";
         errorconfirmpwd_r.style.color = "red";
         return false;
-    } else {
-        errorconfirmpwd_r.innerHTML = "";
-        return true;
     }
+    errorconfirmpwd_r.innerHTML = "";
+    return true;
 }
-
 
 
 // MASCOTAS
@@ -112,7 +113,7 @@ function validarSexoMascota() {
         error.style.color = "red";
         return false;
     }
-    if (sexo !== "Macho" && sexo !== "Hembra") {
+    if (sexo !== "M" && sexo !== "H") {
         error.innerHTML = "El sexo debe ser 'M' para Macho o 'H' para Hembra.";
         error.style.color = "red";
         return false;
@@ -130,8 +131,19 @@ function validarFechaMascota() {
         return false;
     }
     let fechaIngresada = new Date(fecha);
+    if (isNaN(fechaIngresada.getTime())) {
+        error.innerHTML = "La fecha ingresada no es válida.";
+        error.style.color = "red";
+        return false;
+    }
     if (fechaIngresada.getFullYear() < 2001) {
         error.innerHTML = "La fecha no puede ser anterior a 2001.";
+        error.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaIngresada > hoy) {
+        error.innerHTML = "La fecha no puede ser futura.";
         error.style.color = "red";
         return false;
     }
@@ -152,6 +164,11 @@ function validarEspecieMascota() {
         error.style.color = "red";
         return false;
     }
+    if (/\d/.test(especie)) {
+        error.innerHTML = "La especie no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -164,7 +181,6 @@ function validarRazaMascota() {
         error.style.color = "red";
         return false;
     }
-    
     error.innerHTML = "";
     return true;
 }
@@ -177,7 +193,6 @@ function validarPropietarioMascota() {
         error.style.color = "red";
         return false;
     }
-
     error.innerHTML = "";
     return true;
 }
@@ -190,19 +205,22 @@ function validarVeterinarioMascota() {
         error.style.color = "red";
         return false;
     }
-    
     error.innerHTML = "";
     return true;
 }
 
-
 // Validaciones Modificación Mascotas
 
 function validarNombreMascotaMod() {
-    let nombre = document.getElementById('mod_nombre').value;
-    let error = document.getElementById('errorModNombreMascota');
+    let nombre = document.getElementById('nombre').value;
+    let error = document.getElementById('errorNombreMascota');
     if (!nombre || nombre.length < 2) {
         error.innerHTML = "El nombre es obligatorio y debe tener al menos 2 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
         error.style.color = "red";
         return false;
     }
@@ -211,10 +229,15 @@ function validarNombreMascotaMod() {
 }
 
 function validarSexoMascotaMod() {
-    let sexo = document.getElementById('mod_sexo').value;
-    let error = document.getElementById('errorModSexoMascota');
+    let sexo = document.getElementById('sexo').value;
+    let error = document.getElementById('errorSexoMascota');
     if (!sexo) {
         error.innerHTML = "El sexo es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (sexo !== "M" && sexo !== "H") {
+        error.innerHTML = "El sexo debe ser 'M' para Macho o 'H' para Hembra.";
         error.style.color = "red";
         return false;
     }
@@ -223,10 +246,20 @@ function validarSexoMascotaMod() {
 }
 
 function validarEspecieMascotaMod() {
-    let especie = document.getElementById('mod_especie').value;
-    let error = document.getElementById('errorModEspecieMascota');
+    let especie = document.getElementById('especie').value;
+    let error = document.getElementById('errorEspecieMascota');
     if (!especie) {
         error.innerHTML = "La especie es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    if (especie.length < 3) {
+        error.innerHTML = "La especie debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(especie)) {
+        error.innerHTML = "La especie no puede contener números.";
         error.style.color = "red";
         return false;
     }
@@ -235,8 +268,8 @@ function validarEspecieMascotaMod() {
 }
 
 function validarRazaMascotaMod() {
-    let raza = document.getElementById('mod_raza').value;
-    let error = document.getElementById('errorModRazaMascota');
+    let raza = document.getElementById('raza').value;
+    let error = document.getElementById('errorRazaMascota');
     if (!raza) {
         error.innerHTML = "La raza es obligatoria.";
         error.style.color = "red";
@@ -245,8 +278,6 @@ function validarRazaMascotaMod() {
     error.innerHTML = "";
     return true;
 }
-
-
 
 
 // VETERINARIOS
@@ -258,6 +289,11 @@ function validarNombreVet() {
     let error = document.getElementById('errorNombreVet');
     if (!nombre || nombre.length < 3) {
         error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
         error.style.color = "red";
         return false;
     }
@@ -273,6 +309,11 @@ function validarTelefonoVet() {
         error.style.color = "red";
         return false;
     }
+    if (!/^\d{9}$/.test(tel)) {
+        error.innerHTML = "El teléfono debe tener exactamente 9 dígitos.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -282,6 +323,11 @@ function validarEspecialidadVet() {
     let error = document.getElementById('errorEspecialidadVet');
     if (!esp) {
         error.innerHTML = "La especialidad es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    if (esp.length < 4) {
+        error.innerHTML = "La especialidad debe tener al menos 4 caracteres.";
         error.style.color = "red";
         return false;
     }
@@ -297,6 +343,18 @@ function validarFechaContratoVet() {
         error.style.color = "red";
         return false;
     }
+    let fechaIngresada = new Date(fecha);
+    if (isNaN(fechaIngresada.getTime())) {
+        error.innerHTML = "La fecha ingresada no es válida.";
+        error.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaIngresada > hoy) {
+        error.innerHTML = "La fecha de contrato no puede ser futura.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -309,10 +367,20 @@ function validarSalarioVet() {
         error.style.color = "red";
         return false;
     }
+    let salarioNum = Number(salario);
+    if (isNaN(salarioNum)) {
+        error.innerHTML = "El salario debe ser un número.";
+        error.style.color = "red";
+        return false;
+    }
+    if (salarioNum <= 0) {
+        error.innerHTML = "El salario debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
-
 
 // Validaciones Modificación Veterinarios
 
@@ -321,6 +389,11 @@ function validarNombreVetMod() {
     let error = document.getElementById('errorModNombreVet');
     if (!nombre || nombre.length < 3) {
         error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
         error.style.color = "red";
         return false;
     }
@@ -336,6 +409,11 @@ function validarTelefonoVetMod() {
         error.style.color = "red";
         return false;
     }
+    if (!/^\d{9}$/.test(tel)) {
+        error.innerHTML = "El teléfono debe tener exactamente 9 dígitos.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -345,6 +423,11 @@ function validarEspecialidadVetMod() {
     let error = document.getElementById('errorModEspecialidadVet');
     if (!esp) {
         error.innerHTML = "La especialidad es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    if (esp.length < 4) {
+        error.innerHTML = "La especialidad debe tener al menos 4 caracteres.";
         error.style.color = "red";
         return false;
     }
@@ -360,6 +443,18 @@ function validarFechaContratoVetMod() {
         error.style.color = "red";
         return false;
     }
+    let fechaIngresada = new Date(fecha);
+    if (isNaN(fechaIngresada.getTime())) {
+        error.innerHTML = "La fecha ingresada no es válida.";
+        error.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaIngresada > hoy) {
+        error.innerHTML = "La fecha de contrato no puede ser futura.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -372,17 +467,152 @@ function validarSalarioVetMod() {
         error.style.color = "red";
         return false;
     }
+    let salarioNum = Number(salario);
+    if (isNaN(salarioNum)) {
+        error.innerHTML = "El salario debe ser un número.";
+        error.style.color = "red";
+        return false;
+    }
+    if (salarioNum <= 0) {
+        error.innerHTML = "El salario debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
-
 
 
 // HISTORIAL
 
 // Validaciones Creación Historial
 
-function 
+function validarFechaEntradaHis() {
+    let fechaEntHis = document.getElementById('fecha_entrada_his').value;
+    let errorEntHis = document.getElementById('errorfecha_ent_his');
+    if (!fechaEntHis) {
+        errorEntHis.innerHTML = "La fecha de entrada es obligatoria.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    let fechaHis = new Date(fechaEntHis);
+    if (isNaN(fechaHis.getTime())) {
+        errorEntHis.innerHTML = "La fecha ingresada no es válida.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    if (fechaHis.getFullYear() < 2001) {
+        errorEntHis.innerHTML = "La fecha no puede ser anterior a 2001.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaHis > hoy) {
+        errorEntHis.innerHTML = "La fecha no puede ser futura.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    errorEntHis.innerHTML = "";
+    return true;
+}
+
+function validarFechaSalidaHis() {
+    let fechaSalHis = document.getElementById('fecha_salida_his').value;
+    let errorSalHis = document.getElementById('errorfecha_sal_his');
+    if (!fechaSalHis) {
+        errorSalHis.innerHTML = "La fecha de salida es obligatoria.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    let fechaHis = new Date(fechaSalHis);
+    if (isNaN(fechaHis.getTime())) {
+        errorSalHis.innerHTML = "La fecha ingresada no es válida.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    if (fechaHis.getFullYear() < 2001) {
+        errorSalHis.innerHTML = "La fecha no puede ser anterior a 2001.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaHis > hoy) {
+        errorSalHis.innerHTML = "La fecha no puede ser futura.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    errorSalHis.innerHTML = "";
+    return true;
+}
+
+function validarFechaIngresadoHis() {
+    let ingHis = document.getElementById('ingresado_his').value;
+    let erroringHis = document.getElementById('erroringresado_his');
+    if (!ingHis) {
+        erroringHis.innerHTML = "La selección es obligatoria.";
+        erroringHis.style.color = "red";
+        return false;
+    }
+    erroringHis.innerHTML = "";
+    return true;
+}
 
 // Validaciones Modificación Historial
 
+function modFechaEntradaHis() {
+    let fechaEntHis = document.getElementById('fecha_entrada_his').value;
+    let errorEntHis = document.getElementById('errorfecha_ent_his');
+    if (!fechaEntHis) {
+        errorEntHis.innerHTML = "La fecha de entrada es obligatoria.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    let fechaHis = new Date(fechaEntHis);
+    if (isNaN(fechaHis.getTime())) {
+        errorEntHis.innerHTML = "La fecha ingresada no es válida.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    if (fechaHis.getFullYear() < 2001) {
+        errorEntHis.innerHTML = "La fecha no puede ser anterior a 2001.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaHis > hoy) {
+        errorEntHis.innerHTML = "La fecha no puede ser futura.";
+        errorEntHis.style.color = "red";
+        return false;
+    }
+    errorEntHis.innerHTML = "";
+    return true;
+}
+
+function modFechaSalidaHis() {
+    let fechaSalHis = document.getElementById('fecha_salida_his').value;
+    let errorSalHis = document.getElementById('errorfecha_sal_his');
+    if (!fechaSalHis) {
+        errorSalHis.innerHTML = "La fecha de salida es obligatoria.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    let fechaHis = new Date(fechaSalHis);
+    if (isNaN(fechaHis.getTime())) {
+        errorSalHis.innerHTML = "La fecha ingresada no es válida.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    if (fechaHis.getFullYear() < 2001) {
+        errorSalHis.innerHTML = "La fecha no puede ser anterior a 2001.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    let hoy = new Date();
+    if (fechaHis > hoy) {
+        errorSalHis.innerHTML = "La fecha no puede ser futura.";
+        errorSalHis.style.color = "red";
+        return false;
+    }
+    errorSalHis.innerHTML = "";
+    return true;
+}

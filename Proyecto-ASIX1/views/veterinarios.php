@@ -3,7 +3,7 @@
 session_start();
 
 // Verificamos si el usuario está logueado
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: ../views/login.php");
     exit();
 }
@@ -72,8 +72,8 @@ if ($result && mysqli_num_rows($result) > 0) {
     <body>
     <nav>
         <div style="padding: 10px; background: #f1f1f1;">
-            Bienvenido, <?php echo $_SESSION['user_name'] ?? 'Usuario'; ?>
-            <a href="../procesos/logout.php" style="float: right;">Cerrar sesión</a>
+            Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
+            <a href="logout.php" style="float: right;">Cerrar sesión</a>
         </div>
     </nav>
     
