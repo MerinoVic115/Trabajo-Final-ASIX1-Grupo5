@@ -52,40 +52,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/modificar.css">
     <title>Formulario de modificación de veterinario</title>
     <link rel="stylesheet" href="../sets/css/styles.css">
 </head>
 
-<body>
-<div class="header">
-    <div class="logo-title">
-        <h2>Modificar veterinario</h2>
-    </div>
-    <a href="../views/veterinarios.php"><button>Atrás</button></a>
+<body id="body_crud">
+<div id="form-ui">
+    <form action="" method="post" id="form">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        
+        <div id="form-body">
+
+            <div id="welcome-lines">
+                <div id="welcome-line-1">Editar Veterinario</div>
+                <div id="welcome-line-2">Actualiza los datos del veterinario</div>
+            </div>
+            
+            <div id="input-area">
+                <div class="form-inp">
+                    <label for="Nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($veterinario['Nombre']); ?>">
+                </div>
+                    
+                    <br>
+
+                <div class="form-inp">
+                    <label for="Telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="<?php echo htmlspecialchars($veterinario['Telefono']); ?>">
+                </div>
+                    
+                    <br>
+
+                <div class="form-inp">
+                    <label for="Especialidad">Especialidad:</label>
+                    <input type="text" id="especialidad" name="especialidad" value="<?php echo htmlspecialchars($veterinario['Especialidad']); ?>">
+                </div>
+                
+                    <br>
+
+                <div class="form-inp">
+                    <label for="Fecha_Contrato">Fecha de Contrato:</label>
+                    <input type="date" id="fechacontrato" name="fechacontrato" value="<?php echo htmlspecialchars($veterinario['Fecha_Contrato']); ?>" required>
+                </div>
+                
+                    <br>
+                    
+                <div class="form-inp">
+                    <label for="Salario">Salario:</label>
+                    <input type="text" id="salario" name="salario" value="<?php echo htmlspecialchars($veterinario['Salario']); ?>">
+                </div>
+        </div>
+        
+        <div id="submit-button-cvr">
+            <button id="submit-button" type="submit">Guardar cambios</button>
+            <a href="../views/veterinarios.php"><button type="button" class="btn-back">Atrás</button></a>
+        </div>
+
+    </form>  
 </div>
-
-<form action="" method="post">
-    <input type="hidden" name="id" value="<?php echo $id; ?>">
-    
-    <label for="Nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($veterinario['Nombre']); ?>">
-    <br>
-    <label for="Telefono">Teléfono:</label>
-    <input type="text" id="telefono" name="telefono" value="<?php echo htmlspecialchars($veterinario['Telefono']); ?>">
-    <br>
-    <label for="Especialidad">Especialidad:</label>
-    <input type="text" id="especialidad" name="especialidad" value="<?php echo htmlspecialchars($veterinario['Especialidad']); ?>">
-    <br>
-    <label for="Fecha_Contrato">Fecha de Contrato:</label>
-    <input type="date" id="fechacontrato" name="fechacontrato" value="<?php echo htmlspecialchars($veterinario['Fecha_Contrato']); ?>" required>
-    <br>
-    <label for="Salario">Salario:</label>
-    <input type="text" id="salario" name="salario" value="<?php echo htmlspecialchars($veterinario['Salario']); ?>">
-
-
-    <button type="submit">Guardar cambios</button>
-</form>  
 </body>
 </html>
 

@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $especie = mysqli_real_escape_string($conn, $_POST['especie']);
     // $raza = mysqli_real_escape_string($conn, $_POST['raza']);
 
-    $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Especie = '$especie',      WHERE Chip = $id";
+    $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Especie = '$especie', WHERE Chip = $id";
     if (mysqli_query($conn, $update_sql)) {
         echo "Datos actualizados correctamente.";
         header("Location:   ../views/mascotas.php"); // Redirigir a una página de éxito
@@ -52,48 +52,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/modificar.css">
     <title>Formulario de modificación de mascota</title>
+    <link rel="stylesheet" href="../sets/css/styles.css">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+<body id="body_crud">
+<div id="form-ui">
+    <form action="" method="post" id="form">
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <div id="form-body">
+            <div id="welcome-lines">
+                <div id="welcome-line-1">Editar Mascota</div>
+                <div id="welcome-line-2">Actualiza los datos de tu mascota</div>
+            </div>
+            <div id="input-area">
+                <div class="form-inp">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" value="<?php echo $mascota['Nombre']; ?>" required placeholder="Nombre de la mascota">
+                </div>
+                
+                <div class="form-inp">
+                    <label>Sexo</label>
+                    <input type="text" name="genero" value="<?php echo $mascota['Sexo']; ?>" placeholder="Sexo de la mascota">
+                </div>
+                
+                <div class="form-inp">
+                    <label>Especie</label>
+                    <input type="text" name="especie" value="<?php echo $mascota['Especie']; ?>" placeholder="Especie de la mascota">
+                </div>
+                
+                <div class="form-inp">
+                    <label>Raza</label>
+                    <select name="raza" required>
+                        <option value="">Seleccionar raza</option>
+                        <?php
+                        $sql = "SELECT $id Nombre FROM raza";
+                        $result = mysqli_query($conn, $sql);
+                        $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-<body>
-<div class="header">
-    <div class="logo-title">
-        <h2>Modificar mascota</h2>
-    </div>
-    <a href="../views/mascotas.php"><button>Atrás</button></a>
+                        foreach ($listamasc as $lm) {
+                            $selected = ($lm['Chip'] == $mascota['Raza']) ? 'selected' : '';
+                            echo "<option value='{$lm['Chip']}' $selected>{$lm['Nombre']}</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div id="submit-button-cvr">
+                <button id="submit-button" type="submit">Guardar cambios</button>
+                <a href="../views/mascotas.php"><button type="button" class="btn-back">Atrás</button></a>
+            </div>
+        </div>
+    </form>
 </div>
-
-<form action="" method="post">
-    <input type="hidden" name="id" value="<?php echo $id; ?>">
-    
-    <label>Nombre:</label>
-    <input type="text" name="nombre" value="<?php echo $mascota['Nombre']; ?>" required>
-    <br>
-    
-    <label>Sexo:</label>
-    <input type="text" name="genero" value="<?php echo $mascota['Sexo']; ?>">
-    <br>
-    
-    <label>Especie:</label>
-    <input type="text" name="especie" value="<?php echo $mascota['Especie']; ?>">
-    <br>
-    
-    <label>Raza:</label>
-<select id="Raza" name="raza" required>
-        <option value="">Seleccionar raza: </option>
-        <?php
-        $sql = "SELECT $id Nombre FROM raza";
-        $result = mysqli_query($conn, $sql);
-        $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-        foreach ($listamasc as $lm) {
-            echo "<option value='{$lm['Chip']}'>{$lm['Nombre']}</option>";
-        }
-        ?>
-    </select>    <br>
-    
-    <button type="submit">Guardar cambios</button>
-</form>  
 </body>
 </html>

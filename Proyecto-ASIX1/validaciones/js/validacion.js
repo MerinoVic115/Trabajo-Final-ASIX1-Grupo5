@@ -279,7 +279,6 @@ function validarRazaMascotaMod() {
     return true;
 }
 
-
 // VETERINARIOS
 
 // Validaciones Creación Veterinarios
@@ -614,5 +613,303 @@ function modFechaSalidaHis() {
         return false;
     }
     errorSalHis.innerHTML = "";
+    return true;
+}
+
+// RAZA
+
+// Validaciones Creación Raza
+function validarNombreRaza() {
+    let nombre = document.getElementById('raza_nombre').value;
+    let error = document.getElementById('errorNombreRaza');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarAlturaRaza() {
+    let altura = document.getElementById('raza_altura').value;
+    let error = document.getElementById('errorAlturaRaza');
+    if (!altura) {
+        error.innerHTML = "La altura es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    let alturaNum = Number(altura);
+    if (isNaN(alturaNum) || alturaNum <= 0) {
+        error.innerHTML = "La altura debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarPesoRaza() {
+    let peso = document.getElementById('raza_peso').value;
+    let error = document.getElementById('errorPesoRaza');
+    if (!peso) {
+        error.innerHTML = "El peso es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    let pesoNum = Number(peso);
+    if (isNaN(pesoNum) || pesoNum <= 0) {
+        error.innerHTML = "El peso debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarCaracterRaza() {
+    let caracter = document.getElementById('raza_caracter').value;
+    let error = document.getElementById('errorCaracterRaza');
+    if (!caracter || caracter.length < 3) {
+        error.innerHTML = "El carácter es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+// Validaciones Modificación Raza
+function validarNombreRazaMod() {
+    let nombre = document.getElementById('mod_raza_nombre').value;
+    let error = document.getElementById('errorModNombreRaza');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarAlturaRazaMod() {
+    let altura = document.getElementById('mod_raza_altura').value;
+    let error = document.getElementById('errorModAlturaRaza');
+    if (!altura) {
+        error.innerHTML = "La altura es obligatoria.";
+        error.style.color = "red";
+        return false;
+    }
+    let alturaNum = Number(altura);
+    if (isNaN(alturaNum) || alturaNum <= 0) {
+        error.innerHTML = "La altura debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarPesoRazaMod() {
+    let peso = document.getElementById('mod_raza_peso').value;
+    let error = document.getElementById('errorModPesoRaza');
+    if (!peso) {
+        error.innerHTML = "El peso es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    let pesoNum = Number(peso);
+    if (isNaN(pesoNum) || pesoNum <= 0) {
+        error.innerHTML = "El peso debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarCaracterRazaMod() {
+    let caracter = document.getElementById('mod_raza_caracter').value;
+    let error = document.getElementById('errorModCaracterRaza');
+    if (!caracter || caracter.length < 3) {
+        error.innerHTML = "El carácter es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+// PROPIETARIOS
+
+// Validaciones Creación Propietario
+function validarNombrePropietario() {
+    let nombre = document.getElementById('propietario_nombre').value;
+    let error = document.getElementById('errorNombrePropietario');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarDNIPropietario() {
+    let dni = document.getElementById('propietario_dni').value;
+    let error = document.getElementById('errorDNIPropietario');
+    if (!dni) {
+        error.innerHTML = "El DNI es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^[0-9]{8}[A-Za-z]$/.test(dni)) {
+        error.innerHTML = "El DNI debe tener 8 números y una letra.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarDireccionPropietario() {
+    let direccion = document.getElementById('propietario_direccion').value;
+    let error = document.getElementById('errorDireccionPropietario');
+    if (!direccion || direccion.length < 5) {
+        error.innerHTML = "La dirección es obligatoria y debe tener al menos 5 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarTelefonoPropietario() {
+    let telefono = document.getElementById('propietario_telefono').value;
+    let error = document.getElementById('errorTelefonoPropietario');
+    if (!telefono) {
+        error.innerHTML = "El teléfono es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^\d{9}$/.test(telefono)) {
+        error.innerHTML = "El teléfono debe tener exactamente 9 dígitos.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEmailPropietario() {
+    let email = document.getElementById('propietario_email').value;
+    let error = document.getElementById('errorEmailPropietario');
+    if (!email) {
+        error.innerHTML = "El email es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,10}$/.test(email)) {
+        error.innerHTML = "El formato de email no es válido.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+// Validaciones Modificación Propietario
+function validarNombrePropietarioMod() {
+    let nombre = document.getElementById('mod_propietario_nombre').value;
+    let error = document.getElementById('errorModNombrePropietario');
+    if (!nombre || nombre.length < 3) {
+        error.innerHTML = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    if (/\d/.test(nombre)) {
+        error.innerHTML = "El nombre no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarDNIPropietarioMod() {
+    let dni = document.getElementById('mod_propietario_dni').value;
+    let error = document.getElementById('errorModDNIPropietario');
+    if (!dni) {
+        error.innerHTML = "El DNI es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^[0-9]{8}[A-Za-z]$/.test(dni)) {
+        error.innerHTML = "El DNI debe tener 8 números y una letra.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarDireccionPropietarioMod() {
+    let direccion = document.getElementById('mod_propietario_direccion').value;
+    let error = document.getElementById('errorModDireccionPropietario');
+    if (!direccion || direccion.length < 5) {
+        error.innerHTML = "La dirección es obligatoria y debe tener al menos 5 caracteres.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarTelefonoPropietarioMod() {
+    let telefono = document.getElementById('mod_propietario_telefono').value;
+    let error = document.getElementById('errorModTelefonoPropietario');
+    if (!telefono) {
+        error.innerHTML = "El teléfono es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^\d{9}$/.test(telefono)) {
+        error.innerHTML = "El teléfono debe tener exactamente 9 dígitos.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
+    return true;
+}
+
+function validarEmailPropietarioMod() {
+    let email = document.getElementById('mod_propietario_email').value;
+    let error = document.getElementById('errorModEmailPropietario');
+    if (!email) {
+        error.innerHTML = "El email es obligatorio.";
+        error.style.color = "red";
+        return false;
+    }
+    if (!/^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,10}$/.test(email)) {
+        error.innerHTML = "El formato de email no es válido.";
+        error.style.color = "red";
+        return false;
+    }
+    error.innerHTML = "";
     return true;
 }

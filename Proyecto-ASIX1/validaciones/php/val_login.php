@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['username'] = $lnombre; 
                     $_SESSION['user_id'] = $userId;           
                     echo "Inicio de sesión exitoso. Bienvenido, $lnombre";
-                    header("Location: ../../views/mascotas.php");
+                    header("Location: ../../views/principal.php");
                     exit();
                 } else {
                     echo "Contraseña incorrecta.";

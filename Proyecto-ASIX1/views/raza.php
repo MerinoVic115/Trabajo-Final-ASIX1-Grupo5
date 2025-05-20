@@ -11,32 +11,27 @@ if (!isset($_SESSION['username'])) {
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
-// Consulta para obtener cada historial junto con el nombre de la mascota y del veterinario asignado
-$query = "SELECT h.id_historial, h.observacion_his, h.`fecha-entrada_his`, h.`fecha-salida_his`, h.ingresado_his,
-    m.Nombre AS nombre_mascota,
-    v.Nombre AS nombre_veterinario
-FROM historial h
-LEFT JOIN mascota m ON h.mascota = m.Chip
-LEFT JOIN veterinario v ON h.veterinario = v.Id_Vet";
-
+// Consulta para obtener la raza
+$query = "SELECT Id_raza, Nombre, Altura, Peso, Caracter FROM raza";
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
-$historial = [];
+$razas = [];
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $historial[] = $row;
+        $razas[] = $row;
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial - Vetis</title>
     <link rel="stylesheet" href="../sets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="./sets/img/hueso.svg">
+    <title>Raza - Vetis</title>
     <style>
         html, body {
             height: 100%;
@@ -176,58 +171,53 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
-                        <a href="logout.php" style="float: right;">Cerrar sesión</a>
+                        Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                        <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
                     </div>
                 </nav>
                 
-                <h1>Listado de Historial</h1>
+                <h1>Listado de Razas</h1>
                 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Mascota</th>
-                            <th>Observaciones</th>
-                            <th>Veterinario asignado</th>
-                            <th>Fecha Entrada</th>
-                            <th>Fecha Salida</th>
-                            <th>Ingresado</th>
+                            <th>Nombre</th>
+                            <th>Altura</th>
+                            <th>Peso</th>
+                            <th>Caracter</th>
                             <th>Acciones</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($historial)): ?>
-                            <?php foreach ($historial as $histo): ?>
+                        <?php if (!empty($razas)): ?>
+                            <?php foreach ($razas as $raza): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($histo['nombre_mascota'] ?? ''); ?></td>
-                                    <td><?= htmlspecialchars($histo['observacion_his']); ?></td>
-                                    <td><?= htmlspecialchars($histo['nombre_veterinario'] ?? ''); ?></td>
-                                    <td><?= !empty($histo['fecha-entrada_his']) ? date('d/m/Y', strtotime($histo['fecha-entrada_his'])) : ''; ?></td>
-                                    <td><?= !empty($histo['fecha-salida_his']) ? date('d/m/Y', strtotime($histo['fecha-salida_his'])) : ''; ?></td>
-                                    <td><?= htmlspecialchars($histo['ingresado_his']); ?></td>
+                                    <td><?= htmlspecialchars($raza['Nombre']); ?></td>
+                                    <td><?= htmlspecialchars($raza['Altura']); ?></td>
+                                    <td><?= htmlspecialchars($raza['Peso']); ?></td>
+                                    <td><?= htmlspecialchars($raza['Caracter']); ?></td>
+
                                     <td class="actions">
-                                        <a href="../procesos/mod_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-edit" >
-                                            <i class="fa-solid fa-pen-to-square" ></i></a>
-                                        <a href="../procesos/eliminar_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-delete" 
-                                            onclick="return confirm('¿Estás seguro de que deseas eliminar a este historial?');">
-                                            <i class="fa-solid fa-trash-can"></i></a>
-                                    </td>
+                                <a href="../procesos/mod_raza.php?Id_raza=<?= $raza['Id_raza']; ?>" class="btn-action btn-edit">
+                                    <i class="fa-solid fa-pen-to-square" ></i></a>
+                                <a href="../procesos/eliminar_raza.php?Id_raza=<?= $raza['Id_raza']; ?>" class="btn-action btn-delete" 
+                                   onclick="return confirm('¿Estás seguro de que deseas eliminar a este veterinario?');">
+                                   <i class="fa-solid fa-trash-can"></i></a>
+                            </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" style="text-align: center;">No hay historiales registrados</td>
+                                <td colspan="5" style="text-align: center;">No hay mascotas registradas</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
 
                 <div style="margin-top: 20px;">
-                    <a href="../procesos/crear_histo.php">
-                        <button type="button">Registrar un historial</button>
-                    </a>
-                    <a href="principal.php">
-                        <button type="button">Volver a la pagina principal</button>
+                    <a href="../procesos/crear_raza.php">
+                        <button type="submit">Registrar una raza</button>
                     </a>
                 </div>
             </main>
@@ -245,3 +235,4 @@ if ($result && mysqli_num_rows($result) > 0) {
 if (isset($conn)) {
     mysqli_close($conn);
 }
+?>

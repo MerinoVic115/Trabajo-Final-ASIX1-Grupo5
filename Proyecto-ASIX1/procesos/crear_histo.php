@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         isset($_POST['ingresado_his'])
     ) {
         // Capturar los datos del formulario
-        $fk_mascota = $_POST['fk_mascota'];
+        $fk_mascota = $_POST['mascota'];
         $observacion = $_POST['observacion_his'];
         $fecha_entrada = $_POST['fecha_entrada_his'];
         $fecha_salida = $_POST['fecha_salida_his'];
         $ingresado = $_POST['ingresado_his'];
 
         // Consulta para insertar los datos (incluyendo fk_mascota)
-        $query = "INSERT INTO historial (`fk_mascota`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his`) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO historial (`mascota`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his`) VALUES (?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $query);
 
         if ($stmt) {

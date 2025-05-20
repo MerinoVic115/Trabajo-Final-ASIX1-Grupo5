@@ -3,40 +3,35 @@
 session_start();
 
 // Verificamos si el usuario está logueado
-if (!isset($_SESSION['username'])) {
-    header("Location: ../views/login.php");
-    exit();
-}
+// if (!isset($_SESSION['username'])) {
+//     header("Location: ../views/login.php");
+//     exit();
+// }
 
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
-// Consulta para obtener cada historial junto con el nombre de la mascota y del veterinario asignado
-$query = "SELECT h.id_historial, h.observacion_his, h.`fecha-entrada_his`, h.`fecha-salida_his`, h.ingresado_his,
-    m.Nombre AS nombre_mascota,
-    v.Nombre AS nombre_veterinario
-FROM historial h
-LEFT JOIN mascota m ON h.mascota = m.Chip
-LEFT JOIN veterinario v ON h.veterinario = v.Id_Vet";
-
+// Consulta para obtener la raza
+$query = "SELECT DNI, Nombre, Direccion, Telefono, Email FROM propietario";
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
-$historial = [];
+$propietarios = [];
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $historial[] = $row;
+        $propietarios[] = $row;
     }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historial - Vetis</title>
     <link rel="stylesheet" href="../sets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="./sets/img/hueso.svg">
+    <title>Propietarios - Vetis</title>
     <style>
         html, body {
             height: 100%;
@@ -176,60 +171,71 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
-                        <a href="logout.php" style="float: right;">Cerrar sesión</a>
+                        Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                        <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
                     </div>
                 </nav>
                 
-                <h1>Listado de Historial</h1>
+                <h1>Listado de Propietarios</h1>
                 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Mascota</th>
-                            <th>Observaciones</th>
-                            <th>Veterinario asignado</th>
-                            <th>Fecha Entrada</th>
-                            <th>Fecha Salida</th>
-                            <th>Ingresado</th>
+                            <th>Nombre</th>
+                            <th>Altura</th>
+                            <th>Peso</th>
+                            <th>Caracter</th>
                             <th>Acciones</th>
+
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($historial)): ?>
-                            <?php foreach ($historial as $histo): ?>
+                        <?php if (!empty($propietarios)): ?>
+                            <?php foreach ($propietarios as $propietario): ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($histo['nombre_mascota'] ?? ''); ?></td>
-                                    <td><?= htmlspecialchars($histo['observacion_his']); ?></td>
-                                    <td><?= htmlspecialchars($histo['nombre_veterinario'] ?? ''); ?></td>
-                                    <td><?= !empty($histo['fecha-entrada_his']) ? date('d/m/Y', strtotime($histo['fecha-entrada_his'])) : ''; ?></td>
-                                    <td><?= !empty($histo['fecha-salida_his']) ? date('d/m/Y', strtotime($histo['fecha-salida_his'])) : ''; ?></td>
-                                    <td><?= htmlspecialchars($histo['ingresado_his']); ?></td>
+                                    <td><?= htmlspecialchars($propietario['Nombre']); ?></td>
+                                    <td><?= htmlspecialchars($propietario['Direccion']); ?></td>
+                                    <td><?= htmlspecialchars($propietario['Telefono']); ?></td>
+                                    <td><?= htmlspecialchars($propietario['Email']); ?></td>
+
                                     <td class="actions">
-                                        <a href="../procesos/mod_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-edit" >
+                                        <a href="../procesos/mod_pro.php?DNI=<?= $propietario['DNI']; ?>" class="btn-action btn-edit">
                                             <i class="fa-solid fa-pen-to-square" ></i></a>
-                                        <a href="../procesos/eliminar_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-delete" 
-                                            onclick="return confirm('¿Estás seguro de que deseas eliminar a este historial?');">
+                                        <a href="../procesos/eliminar_pro.php?DNI=<?= $propietario['DNI']; ?>"  class="btn-action btn-delete"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este propietario?');">
                                             <i class="fa-solid fa-trash-can"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" style="text-align: center;">No hay historiales registrados</td>
+                                <td colspan="5" style="text-align: center;">No hay mascotas registradas</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
 
                 <div style="margin-top: 20px;">
-                    <a href="../procesos/crear_histo.php">
-                        <button type="button">Registrar un historial</button>
-                    </a>
-                    <a href="principal.php">
-                        <button type="button">Volver a la pagina principal</button>
+                    <a href="../procesos/crear_pets.php">
+                        <button type="submit">Registrar una mascota</button>
                     </a>
                 </div>
+
+
+                    <hr>
+
+                <div style="margin-top: 20px;">
+                    <a href="./veterinarios.php">
+                        <button type="button">Ver veterinarios</button>
+                    </a>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <a href="./historial.php">
+                        <button type="button">Ver historial</button>
+                    </a>
+                </div>
+
             </main>
             <footer class="footer">
                 <p>© 2023 Vetis Andalucía - Todos los derechos reservados</p>
@@ -239,9 +245,9 @@ if ($result && mysqli_num_rows($result) > 0) {
     </div>
 </body>
 </html>
-
 <?php
 // Cerramos la conexión al final del archivo
 if (isset($conn)) {
     mysqli_close($conn);
 }
+?>
