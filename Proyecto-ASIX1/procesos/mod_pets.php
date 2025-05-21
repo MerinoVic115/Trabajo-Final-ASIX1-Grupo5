@@ -84,10 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 
                 <div class="form-inp">
-                    <label>Especie</label>
-                    <input type="text" name="especie" value="<?php echo $mascota['Especie']; ?>" placeholder="Especie de la mascota"
-                        oninput="validarEspecieMascotaMod()" onblur="validarEspecieMascotaMod()">
-                    <p id="errorEspecieMascota"></p>
+                    <label>Raza</label>
+                    <select name="veterinario" required>
+                        <option value="">Seleccionar raza</option>
+                        <?php foreach ($veterinarios as $v): 
+                            $selected = (isset($histo['veterinario']) && $histo['veterinario'] == $v['Id_raza']) ? 'selected' : '';
+                        ?>
+                            <option value="<?php echo $v['Id_raza']; ?>" <?php echo $selected; ?>>
+                                <?php echo htmlspecialchars($v['Nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 
             </div>

@@ -256,6 +256,18 @@ i {
   border-radius: 5px;
 }
 
+.register-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 
 /* sidebar.css */
 .sidebar {
@@ -280,7 +292,7 @@ i {
   width: 100%;
 }
 .sidebar nav ul li {
-  margin: 20px 0;
+  margin: 15px; /* <-- Esto aplica un margen vertical de 20px arriba y abajo */
   text-align: center;
 }
 .sidebar nav ul li a {
@@ -671,6 +683,8 @@ label {
 
 input[type="text"],
 input[type="date"],
+input[type="number"],
+input[type="email"],
 select {
   width: 100%;
   padding: 12px;
@@ -683,6 +697,8 @@ select {
 
 input[type="text"]:focus,
 input[type="date"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
 select:focus {
   border-color: #4CAF50;
   outline: none;

@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Obtener mascotas y veterinarios para los selects
 $mascotas = [];
 $veterinarios = [];
+$razas = [];
 $resMasc = mysqli_query($conn, "SELECT Chip, Nombre FROM mascota");
 while ($row = mysqli_fetch_assoc($resMasc)) {
     $mascotas[] = $row;
@@ -59,6 +60,11 @@ while ($row = mysqli_fetch_assoc($resMasc)) {
 $resVet = mysqli_query($conn, "SELECT Id_Vet, Nombre FROM veterinario");
 while ($row = mysqli_fetch_assoc($resVet)) {
     $veterinarios[] = $row;
+}
+// Obtener razas para el select de razas
+$resRaza = mysqli_query($conn, "SELECT Id_Raza, Nombre FROM raza");
+while ($row = mysqli_fetch_assoc($resRaza)) {
+    $razas[] = $row;
 }
 ?>
 
@@ -106,6 +112,19 @@ while ($row = mysqli_fetch_assoc($resVet)) {
                         ?>
                             <option value="<?php echo $m['Chip']; ?>" <?php echo $selected; ?>>
                                 <?php echo htmlspecialchars($m['Nombre']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-inp">
+                    <label>Raza</label>
+                    <select name="raza" required>
+                        <option value="">Seleccionar raza</option>
+                        <?php foreach ($razas as $r): 
+                            $selected = (isset($histo['raza']) && $histo['raza'] == $r['Id_Raza']) ? 'selected' : '';
+                        ?>
+                            <option value="<?php echo $r['Id_Raza']; ?>" <?php echo $selected; ?>>
+                                <?php echo htmlspecialchars($r['Nombre']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

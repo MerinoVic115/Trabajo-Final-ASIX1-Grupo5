@@ -11,7 +11,7 @@ if (!isset($_SESSION['username'])) {
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
-// Consulta para obtener cada historial junto con el nombre de la mascota y del veterinario asignado
+// Consulta para obtener cada historial junto con el nombre de la mascota, raza y veterinario asignado
 $query = "SELECT 
     h.id_historial,
     h.observacion_his,
@@ -19,9 +19,11 @@ $query = "SELECT
     h.`fecha-salida_his`,
     h.ingresado_his,
     m.Nombre AS nombre_mascota,
+    r.Nombre AS nombre_raza,
     v.Nombre AS nombre_veterinario
 FROM historial h
 INNER JOIN mascota m ON h.mascota = m.Chip
+INNER JOIN raza r ON m.Raza = r.Id_Raza
 INNER JOIN veterinario v ON h.veterinario = v.Id_Vet;
 ";
 
@@ -77,6 +79,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <thead>
                         <tr>
                             <th>Mascota</th>
+                            <th>Raza</th>
                             <th>Observaciones</th>
                             <th>Veterinario asignado</th>
                             <th>Fecha Entrada</th>
@@ -90,6 +93,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                             <?php foreach ($historial as $histo): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($histo['nombre_mascota'] ?? ''); ?></td>
+                                    <td><?= htmlspecialchars($histo['nombre_raza'] ?? ''); ?></td>
                                     <td><?= htmlspecialchars($histo['observacion_his']); ?></td>
                                     <td><?= htmlspecialchars($histo['nombre_veterinario'] ?? ''); ?></td>
                                     <td><?= !empty($histo['fecha-entrada_his']) ? date('d/m/Y', strtotime($histo['fecha-entrada_his'])) : ''; ?></td>

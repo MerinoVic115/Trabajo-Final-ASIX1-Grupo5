@@ -50,40 +50,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="body_forms">
 <div id="form-ui">
-    <div class="logo-title">
-        <h2>Crear veterinario</h2>
-    </div>
-    <a href="../views/veterinarios.php"><button type="button">Atrás</button></a>
+    <form action="" method="post" id="form">
+        <div id="form-body">
+            <div id="welcome-lines">
+                <div id="welcome-line-1">Crear Veterinario</div>
+                <div id="welcome-line-2">Rellena los datos del veterinario</div>
+            </div>
+            <div id="input-area">
+                <div class="form-inp">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre del veterinario" required>
+                </div>
+                <div class="form-inp">
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" name="telefono" id="telefono" placeholder="Introduce el teléfono" required>
+                </div>
+                <div class="form-inp">
+                    <label for="especialidad">Especialidad</label>
+                    <input type="text" name="especialidad" id="especialidad" placeholder="Introduce la especialidad" required>
+                </div>
+                <div class="form-inp">
+                    <label for="fecha_contrato">Fecha de Contrato</label>
+                    <input type="date" name="fecha_contrato" id="fecha_contrato" required>
+                </div>
+                <div class="form-inp">
+                    <label for="salario">Salario</label>
+                    <input type="number" name="salario" id="salario" placeholder="Introduce el salario" required>
+                </div>
+            </div>
+            <div id="submit-button-cvr">
+                <button id="submit-button" type="submit">Guardar cambios</button>
+                <a href="../views/veterinarios.php"><button type="button" class="btn-back">Atrás</button></a>
+            </div>
+        </div>
+    </form>
 </div>
-
-<form action="" method="post">
-    <div class="form-group">
-        <label>Nombre:</label>
-        <input type="text" name="nombre" placeholder="Introduce el nombre del veterinario" required>
-    </div>
-    
-    <div class="form-group">
-        <label>Teléfono:</label>
-        <input type="text" name="telefono" placeholder="Introduce el teléfono" required>
-    </div>
-
-    <div class="form-group">
-        <label>Especialidad:</label>
-        <input type="text" name="especialidad" placeholder="Introduce la especialidad" required>
-    </div>
-
-    <div class="form-group">
-        <label>Fecha de Contrato:</label>
-        <input type="date" name="fecha_contrato" required>
-    </div>
-
-    <div class="form-group">
-        <label>Salario:</label>
-        <input type="number" name="salario" placeholder="Introduce el salario" required>
-    </div>
-
-    <button type="submit">Guardar cambios</button>
-</form>  
 <?php mysqli_close($conn); ?>
 </body>
 </html>

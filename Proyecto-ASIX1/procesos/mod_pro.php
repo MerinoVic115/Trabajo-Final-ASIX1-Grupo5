@@ -78,11 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-inp">
                     <label>Teléfono</label>
-                    <input type="tel" name="telefono" value="<?php echo htmlspecialchars($propietario['Telefono'] ?? ''); ?>" required>
+                    <input type="text" name="telefono" value="<?php echo htmlspecialchars($propietario['Telefono'] ?? ''); ?>" required>
                 </div>
                 <div class="form-inp">
                     <label>Email</label>
-                    <input type="email" name="email" value="<?php echo htmlspecialchars($propietario['Email'] ?? ''); ?>">
+                    <input type="text" name="email" value="<?php echo htmlspecialchars($propietario['Email'] ?? ''); ?>">
                 </div>
             </div>
             <div id="submit-button-cvr">

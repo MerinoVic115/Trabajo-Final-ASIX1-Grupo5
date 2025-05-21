@@ -75,11 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="form-inp">
                     <label>Altura</label>
-                    <input type="number" name="altura" value="<?php echo htmlspecialchars($raza['Altura'] ?? ''); ?>">
+                    <input type="text" name="altura" value="<?php echo htmlspecialchars($raza['Altura'] ?? ''); ?>">
                 </div>
                 <div class="form-inp">
                     <label>Peso</label>
-                    <input type="number" name="peso" value="<?php echo htmlspecialchars($raza['Peso'] ?? ''); ?>">
+                    <input type="text" name="peso" value="<?php echo htmlspecialchars($raza['Peso'] ?? ''); ?>">
                 </div>
                 <div class="form-inp">
                     <label>Caracter</label>

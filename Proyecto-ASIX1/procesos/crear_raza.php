@@ -10,11 +10,11 @@ if (!isset($_SESSION['username'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Capturar los datos del formulario
-    $id_raza = $_POST['Id_Raza'];
-    $nombre = $_POST['Nombre'];
-    $altura = $_POST['Altura'];
-    $peso = $_POST['Peso'];
-    $caracter = $_POST['Caracter'];
+    // NOTA: El campo Id_Raza no debe venir del formulario, ya que es autoincremental normalmente
+    $nombre = $_POST['nombre'];
+    $altura = $_POST['altura'];
+    $peso = $_POST['peso'];
+    $caracter = $_POST['caracter'];
 
     // Consulta para insertar los datos
     $query1 = "INSERT INTO Raza (Nombre, Altura, Peso, Caracter) VALUES (?, ?, ?, ?)";
@@ -46,43 +46,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de creación de razas</title>
-    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">  
+    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="body_forms">
-<div class="header">
-    <div class="logo-title">
-        <h2>Crear raza</h2>
-    </div>
-    <a href="../views/raza.php"><button type="button">Atrás</button></a>
+<div id="form-ui">
+    <form action="" method="post" id="form">
+        <div id="form-body">
+            <div id="welcome-lines">
+                <div id="welcome-line-1">Crear Raza</div>
+                <div id="welcome-line-2">Rellena los datos de la raza</div>
+            </div>
+            <div id="input-area">
+                <div class="form-inp">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la raza" required>
+                    <p id="errorNombreRaza"></p>
+                </div>
+                <div class="form-inp">
+                    <label for="altura">Altura</label>
+                    <input type="number" name="altura" id="altura" placeholder="Introduce la altura de la raza" required>
+                    <p id="errorAlturaRaza"></p>
+                </div>
+                <div class="form-inp">
+                    <label for="peso">Peso</label>
+                    <input type="number" name="peso" id="peso" placeholder="Introduce el peso de la raza" required>
+                    <p id="errorPesoRaza"></p>
+                </div>
+                <div class="form-inp">
+                    <label for="caracter">Caracter</label>
+                    <input type="text" name="caracter" id="caracter" placeholder="Introduce el caracter de la raza">
+                    <p id="errorCaracterRaza"></p>
+                </div>
+            </div>
+            <div id="submit-button-cvr">
+                <button id="submit-button" type="submit">Guardar cambios</button>
+                <a href="../views/raza.php"><button type="button" class="btn-back">Atrás</button></a>
+            </div>
+        </div>
+    </form>
 </div>
-
-<form action="" method="post">
-    <div class="form-group">
-        <label>Nombre:</label>
-        <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la raza" required>
-        <p id="errorNombreRaza"></p>
-    </div>
-    
-    <div class="form-group">
-        <label>Altura:</label>
-        <input type="number" name="altura" id="altura" placeholder="Introduce la altura de la raza" required>
-        <p id="errorAlturaRaza"></p>
-    </div>
-
-    <div class="form-group">
-        <label>Peso:</label>
-        <input type="number" name="peso" id="peso" placeholder="Introduce el peso de la raza" required>
-        <p id="errorPesoRaza"></p>
-    </div>
-
-    <div class="form-group">
-        <label>Caracter:</label>
-        <input type="text" name="caracter" id="caracter" placeholder="Introduce el caracter de la raza">
-        <p id="errorCaracterRaza"></p>
-    </div>
-
-    <button type="submit">Guardar cambios</button>
-</form>  
 <?php mysqli_close($conn); ?>
 </body>
 </html>

@@ -3,10 +3,10 @@
 session_start();
 
 // Verificamos si el usuario está logueado
-// if (!isset($_SESSION['username'])) {
-//     header("Location: ../views/login.php");
-//     exit();
-// }
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
