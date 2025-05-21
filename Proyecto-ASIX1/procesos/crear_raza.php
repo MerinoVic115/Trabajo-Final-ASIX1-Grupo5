@@ -1,6 +1,6 @@
 <?php
 include "../conexion/conexion.php";
-
+session_start();
 $error = false;
 
 if (!isset($_SESSION['username'])) {
@@ -44,10 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de creación de razas</title>
+    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">  
 </head>
-<body>
+<body class="body_forms">
 <div class="header">
     <div class="logo-title">
         <h2>Crear raza</h2>
@@ -56,27 +57,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <form action="" method="post">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" placeholder="Introduce el nombre de la raza" required>
-    <p id="errorNombreRaza" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Introduce el nombre de la raza" required>
+        <p id="errorNombreRaza"></p>
+    </div>
     
-    <label>Altura:</label>
-    <input type="number" name="altura" placeholder="Introduce la altura de la raza" required>
-    <p id="errorAlturaRaza" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Altura:</label>
+        <input type="number" name="altura" id="altura" placeholder="Introduce la altura de la raza" required>
+        <p id="errorAlturaRaza"></p>
+    </div>
 
-    <label>Peso:</label>
-    <input type="number" name="peso" placeholder="Introduce el peso de la raza" required>
-    <p id="errorPesoRaza" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Peso:</label>
+        <input type="number" name="peso" id="peso" placeholder="Introduce el peso de la raza" required>
+        <p id="errorPesoRaza"></p>
+    </div>
 
-    <label>Caracter:</label>
-    <input type="text" name="caracter" placeholder="Introduce el caracter de la raza">
-    <p id="errorCaracterRaza" style="color: red;"></p>
-    <br>
-
-    <br>
+    <div class="form-group">
+        <label>Caracter:</label>
+        <input type="text" name="caracter" id="caracter" placeholder="Introduce el caracter de la raza">
+        <p id="errorCaracterRaza"></p>
+    </div>
 
     <button type="submit">Guardar cambios</button>
 </form>  

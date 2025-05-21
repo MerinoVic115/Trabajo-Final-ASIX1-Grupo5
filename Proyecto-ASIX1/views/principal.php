@@ -20,13 +20,12 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body class="bg-light">
-  <div class="layout-container d-flex min-vh-100">
+  <div class="layout-container">
       <aside class="sidebar">
       <nav>
         <ul>
-          <li><a href="principal.php"><img src="../sets/img/Vetis_logo_blanco.png" width="125px" alt="Vetis Logo"></a></li>
+          <li style="background-color: #13512d; border-radius: 15px"><a href="principal.php"><img src="../sets/img/Vetis_logo_blanco.png" width="125px" alt="Vetis Logo"></a></li>
           <li><a href="mascotas.php">Mascotas</a></li>
           <li><a href="veterinarios.php">Veterinarios</a></li>
           <li><a href="historial.php">Historial</a></li>
@@ -37,7 +36,7 @@
       </nav>
     </aside>  
 
-    <div class="content-area flex-grow-1 d-flex flex-column">
+    <div class="content-area flex-grow-1 d-flex flex-column" style="margin-left: 250px;">
       <main class="main-content flex-grow-1 bg-light py-4 px-2 d-flex flex-column align-items-center justify-content-start">
         <div class="container-fluid h-100 d-flex flex-column">
           <div class="row g-4 flex-grow-1 align-items-stretch justify-content-center ps-xl-5 ps-lg-5 ps-md-4 ps-3">

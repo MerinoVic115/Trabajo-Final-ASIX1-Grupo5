@@ -11,22 +11,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         isset($_POST['observacion_his']) &&
         isset($_POST['fecha_entrada_his']) &&
         isset($_POST['fecha_salida_his']) &&
-        isset($_POST['ingresado_his'])
+        isset($_POST['ingresado_his']) &&
+        isset($_POST['Veterinario']) // ✅ agregar esta validación
     ) {
         // Capturar los datos del formulario
-        $fk_mascota = $_POST['mascota'];
+        $fk_mascota = $_POST['fk_mascota']; // ✅ ojo: aquí usabas mal 'mascota'
+        $fk_veterinario = $_POST['Veterinario']; // ✅ capturamos correctamente
         $observacion = $_POST['observacion_his'];
         $fecha_entrada = $_POST['fecha_entrada_his'];
         $fecha_salida = $_POST['fecha_salida_his'];
         $ingresado = $_POST['ingresado_his'];
 
-        // Consulta para insertar los datos (incluyendo fk_mascota)
-        $query = "INSERT INTO historial (`mascota`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his`) VALUES (?, ?, ?, ?, ?)";
+        // Consulta corregida con veterinario incluido
+        $query = "INSERT INTO historial 
+            (`mascota`, `observacion_his`, `fecha-entrada_his`, `fecha-salida_his`, `ingresado_his`, `veterinario`) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+
         $stmt = mysqli_prepare($conn, $query);
 
         if ($stmt) {
-            mysqli_stmt_bind_param($stmt, "issss", $fk_mascota, $observacion, $fecha_entrada, $fecha_salida, $ingresado);
-
+            mysqli_stmt_bind_param($stmt, "issssi", $fk_mascota, $observacion, $fecha_entrada, $fecha_salida, $ingresado, $fk_veterinario);
             if (!mysqli_stmt_execute($stmt)) {
                 $error = true;
             }
@@ -43,16 +47,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de creación de historial</title>
+    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
 </head>
-<body>
+<body class="body_forms">
 <div class="header">
     <div class="logo-title">
         <h2>Crear historial</h2>
@@ -61,56 +67,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <form action="" method="post">
-    <label>Mascota:</label>
-    <select id="fk_mascota" name="fk_mascota" required>
-        <option value="">Seleccionar mascota: </option>
-        <?php
-        $sql = "SELECT Chip, Nombre FROM mascota";
-        $result = mysqli_query($conn, $sql);
-        $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    <div class="form-group">
+        <label>Mascota:</label>
+        <select id="fk_mascota" name="fk_mascota" required>
+            <option value="">Seleccionar mascota: </option>
+            <?php
+            $sql = "SELECT Chip, Nombre FROM mascota";
+            $result = mysqli_query($conn, $sql);
+            $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        foreach ($listamasc as $lm) {
-            echo "<option value='{$lm['Chip']}'>{$lm['Nombre']}</option>";
-        }
-        ?>
-    </select>
+            foreach ($listamasc as $lm) {
+                echo "<option value='{$lm['Chip']}'>{$lm['Nombre']}</option>";
+            }
+            ?>
+        </select>
+    </div>
 
-    <label>Observación:</label>
-    <input type="text" name="observacion_his" placeholder="Introduce la observación">
-    <br>
+    <div class="form-group">
+        <label>Observación:</label>
+        <input type="text" name="observacion_his" placeholder="Introduce la observación">
+    </div>
     
-    <label>Fecha de entrada:</label>
-    <input type="date" name="fecha_entrada_his" required onblur="validarFechaEntradaHis()">
-    <p id="errorfecha_ent_his" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Fecha de entrada:</label>
+        <input type="date" name="fecha_entrada_his" required onblur="validarFechaEntradaHis()">
+        <p id="errorfecha_ent_his"></p>
+    </div>
 
-    <label>Fecha de salida:</label>
-    <input type="date" name="fecha_salida_his" required onblur="validarFechaSalidaHis()">
-    <p id="errorfecha_sal_his" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Fecha de salida:</label>
+        <input type="date" name="fecha_salida_his" required onblur="validarFechaSalidaHis()">
+        <p id="errorfecha_sal_his"></p>
+    </div>
 
-    <label>Ingresado:</label>
-    <select name="ingresado_his" required onblur="validarIngresadoHis()">
-        <option value="">Selecciona una opción</option>
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-    </select>
-    <p id="erroringresado_his" style="color: red;"></p>
-    <br>
+    <div class="form-group">
+        <label>Ingresado:</label>
+        <select name="ingresado_his" required onblur="validarIngresadoHis()">
+            <option value="">Selecciona una opción</option>
+            <option value="Sí">Sí</option>
+            <option value="No">No</option>
+        </select>
+        <p id="erroringresado_his"></p>
+    </div>
     
-    <label>Veterinario Asignado:</label>
+    <div class="form-group">
+        <label>Veterinario Asignado:</label>
         <select id="Veterinario" name="Veterinario" required>
-        <option value="">Seleccionar veterinario: </option>
-        <?php
-        $sql = "SELECT Nombre FROM veterinario";
-        $result = mysqli_query($conn, $sql);
-        $listamasc = mysqli_fetch_all($result, MYSQLI_ASSOC);
+            <option value="">Seleccionar veterinario: </option>
+            <?php
+            $sql = "SELECT Id_Vet, Nombre FROM veterinario";
+            $result = mysqli_query($conn, $sql);
+            $listaVet = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        foreach ($listamasc as $lm) {
-            echo "<option value='{$lm['Id_Vet']}'>{$lm['Nombre']}</option>";
-        }
-        ?>
-    </select>
+            foreach ($listaVet as $lv) {
+                echo "<option value='{$lv['Id_Vet']}'>{$lv['Nombre']}</option>";
+            }
+            ?>
+        </select>
+    </div>
 
     <button type="submit">Guardar cambios</button>
 </form>

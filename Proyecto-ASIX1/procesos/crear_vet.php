@@ -1,6 +1,6 @@
 <?php
 include "../conexion/conexion.php";
-
+session_start();
 $error = false;
 
 if (!isset($_SESSION['username'])) {
@@ -44,11 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de creación de veterinario</title>
+    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
 </head>
-<body>
-<div class="header">
+<body class="body_forms">
+<div id="form-ui">
     <div class="logo-title">
         <h2>Crear veterinario</h2>
     </div>
@@ -56,25 +57,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <form action="" method="post">
-    <label>Nombre:</label>
-    <input type="text" name="nombre" placeholder="Introduce el nombre del veterinario" required>
-    <br>
+    <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" placeholder="Introduce el nombre del veterinario" required>
+    </div>
     
-    <label>Teléfono:</label>
-    <input type="text" name="telefono" placeholder="Introduce el teléfono" required>
-    <br>
+    <div class="form-group">
+        <label>Teléfono:</label>
+        <input type="text" name="telefono" placeholder="Introduce el teléfono" required>
+    </div>
 
-    <label>Especialidad:</label>
-    <input type="text" name="especialidad" placeholder="Introduce la especialidad" required>
-    <br>
+    <div class="form-group">
+        <label>Especialidad:</label>
+        <input type="text" name="especialidad" placeholder="Introduce la especialidad" required>
+    </div>
 
-    <label>Fecha de Contrato:</label>
-    <input type="date" name="fecha_contrato" required>
-    <br>
+    <div class="form-group">
+        <label>Fecha de Contrato:</label>
+        <input type="date" name="fecha_contrato" required>
+    </div>
 
-    <label>Salario:</label>
-    <input type="number" name="salario" placeholder="Introduce el salario" required>
-    <br>
+    <div class="form-group">
+        <label>Salario:</label>
+        <input type="number" name="salario" placeholder="Introduce el salario" required>
+    </div>
 
     <button type="submit">Guardar cambios</button>
 </form>  

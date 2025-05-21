@@ -4,8 +4,8 @@
 
 include "../conexion/conexion.php";
 
-if (isset($_GET['Id_Raza']) && !empty($_GET['Id_Raza'])) {
-    $Id_Raza = $_GET['Id_Raza'];
+if (isset($_GET['Id_raza']) && !empty($_GET['Id_raza'])) {
+    $Id_Raza = $_GET['Id_raza'];
 
     // Eliminamos la raza
     $sql_eliminar_raza = "DELETE FROM raza WHERE `Id_Raza` = ?";

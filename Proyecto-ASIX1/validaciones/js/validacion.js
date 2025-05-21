@@ -84,6 +84,8 @@ function r_validarconfirmPwd() { // Validación confirmación de contraseña en 
 }
 
 
+
+
 // MASCOTAS
 
 // Validaciones Creación Mascotas
@@ -142,8 +144,15 @@ function validarFechaMascota() {
         return false;
     }
     let hoy = new Date();
+    let limite = new Date();
+    limite.setMonth(limite.getMonth() - 2); // Limite de 2 meses
     if (fechaIngresada > hoy) {
         error.innerHTML = "La fecha no puede ser futura.";
+        error.style.color = "red";
+        return false;
+    }
+    if (fechaIngresada > limite) {
+        error.innerHTML = "La fecha no puede ser de una mascota con menos de 2 meses.";
         error.style.color = "red";
         return false;
     }
@@ -166,18 +175,6 @@ function validarEspecieMascota() {
     }
     if (/\d/.test(especie)) {
         error.innerHTML = "La especie no puede contener números.";
-        error.style.color = "red";
-        return false;
-    }
-    error.innerHTML = "";
-    return true;
-}
-
-function validarRazaMascota() {
-    let raza = document.getElementById('raza').value;
-    let error = document.getElementById('errorRazaMascota');
-    if (!raza) {
-        error.innerHTML = "La raza es obligatoria.";
         error.style.color = "red";
         return false;
     }
@@ -267,18 +264,6 @@ function validarEspecieMascotaMod() {
     return true;
 }
 
-function validarRazaMascotaMod() {
-    let raza = document.getElementById('raza').value;
-    let error = document.getElementById('errorRazaMascota');
-    if (!raza) {
-        error.innerHTML = "La raza es obligatoria.";
-        error.style.color = "red";
-        return false;
-    }
-    error.innerHTML = "";
-    return true;
-}
-
 // VETERINARIOS
 
 // Validaciones Creación Veterinarios
@@ -330,6 +315,11 @@ function validarEspecialidadVet() {
         error.style.color = "red";
         return false;
     }
+    if (/\d/.test(esp)) {
+        error.innerHTML = "La especialidad no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -374,6 +364,11 @@ function validarSalarioVet() {
     }
     if (salarioNum <= 0) {
         error.innerHTML = "El salario debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    if (salarioNum > 20000) {
+        error.innerHTML = "El salario no puede superar 20000.";
         error.style.color = "red";
         return false;
     }
@@ -430,6 +425,11 @@ function validarEspecialidadVetMod() {
         error.style.color = "red";
         return false;
     }
+    if (/\d/.test(esp)) {
+        error.innerHTML = "La especialidad no puede contener números.";
+        error.style.color = "red";
+        return false;
+    }
     error.innerHTML = "";
     return true;
 }
@@ -474,6 +474,11 @@ function validarSalarioVetMod() {
     }
     if (salarioNum <= 0) {
         error.innerHTML = "El salario debe ser un número positivo.";
+        error.style.color = "red";
+        return false;
+    }
+    if (salarioNum > 20000) {
+        error.innerHTML = "El salario no puede superar 20000.";
         error.style.color = "red";
         return false;
     }
@@ -539,6 +544,16 @@ function validarFechaSalidaHis() {
         errorSalHis.innerHTML = "La fecha no puede ser futura.";
         errorSalHis.style.color = "red";
         return false;
+    }
+    // Validar que la fecha de salida sea igual o posterior a la de entrada
+    let fechaEntHis = document.getElementById('fecha_entrada_his').value;
+    if (fechaEntHis) {
+        let fechaEntrada = new Date(fechaEntHis);
+        if (fechaHis < fechaEntrada) {
+            errorSalHis.innerHTML = "La fecha de salida no puede ser anterior a la de entrada.";
+            errorSalHis.style.color = "red";
+            return false;
+        }
     }
     errorSalHis.innerHTML = "";
     return true;

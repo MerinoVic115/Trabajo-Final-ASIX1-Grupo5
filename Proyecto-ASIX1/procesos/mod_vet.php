@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Formulario de modificación de veterinario</title>
-    <link rel="stylesheet" href="../sets/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
-<body id="body_crud">
+<body id="body_crud" class="body_forms">
 <div id="form-ui">
     <form action="" method="post" id="form">
         <input type="hidden" name="id" value="<?php echo $id; ?>">
