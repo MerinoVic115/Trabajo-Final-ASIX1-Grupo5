@@ -8,9 +8,10 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// Validar si se ha enviado un DNI válido por GET
-if (!isset($_GET['DNI']) || empty($_GET['DNI'])) {
-    die("ID de propietario no válido. ¿Estás accediendo directamente a esta página? Debes hacerlo desde la lista de propietarios.");
+// Verificar si se ha recibido un DNI válido
+if (!isset($_GET['DNI'])) {
+    echo "ID de propietario no válido.";
+    exit();
 }
 
 $id = mysqli_real_escape_string($conn, $_GET['DNI']);
@@ -25,25 +26,58 @@ if (!$propietario) {
     exit();
 }
 
-// Procesar el formulario si se envía
+
+// Validaciones PHP
+$errores = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recoger el ID del formulario, no del GET
-    $id = mysqli_real_escape_string($conn, $_POST['id']);
-    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $telf = mysqli_real_escape_string($conn, $_POST['telefono']);
-    $direc = mysqli_real_escape_string($conn, $_POST['direccion']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nombre = $_POST['nombre'];
+    $direc = $_POST['direccion'];
+    $telf = $_POST['telefono'];
+    $email = $_POST['email'];
 
-    // Consulta de actualización
-    $update_sql = "UPDATE propietario 
-                   SET Nombre = '$nombre', Direccion = '$direc', Telefono = '$telf', Email = '$email' 
-                   WHERE DNI = '$id'";
+    // Validación PHP para Nombre
+    if (!$nombre || strlen($nombre) < 3) {
+        $errores['nombre'] = "El nombre es obligatorio y debe tener al menos 3 caracteres.";
+    } elseif (preg_match('/\d/', $nombre)) {
+        $errores['nombre'] = "El nombre no puede contener números.";
+    }
 
-    if (mysqli_query($conn, $update_sql)) {
-        header("Location: ../views/propietarios.php"); // Redirigir a la lista
-        exit();
-    } else {
-        echo "Error al actualizar los datos: " . mysqli_error($conn);
+    // Validación PHP para Dirección
+    if (!$direc || strlen($direc) < 5) {
+        $errores['direccion'] = "La dirección es obligatoria y debe tener al menos 5 caracteres.";
+    }
+
+    // Validación PHP para Teléfono
+    if (!$telf) {
+        $errores['telefono'] = "El teléfono es obligatorio.";
+    } elseif (!preg_match('/^\d{9}$/', $telf)) {
+        $errores['telefono'] = "El teléfono debe tener exactamente 9 dígitos.";
+    }
+
+    // Validación PHP para Email
+    if (!$email) {
+        $errores['email'] = "El email es obligatorio.";
+    } elseif (!preg_match('/^[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,10}$/', $email)) {
+        $errores['email'] = "El formato de email no es válido.";
+    }
+
+    // Solo actualizar si no hay errores
+    if (empty($errores)) {
+        $nombre = mysqli_real_escape_string($conn, $nombre);
+        $direc = mysqli_real_escape_string($conn, $direc);
+        $telf = mysqli_real_escape_string($conn, $telf);
+        $email = mysqli_real_escape_string($conn, $email);
+
+        $update_sql = "UPDATE propietario 
+                       SET Nombre = '$nombre', Direccion = '$direc', Telefono = '$telf', Email = '$email' 
+                       WHERE DNI = '$id'";
+
+        if (mysqli_query($conn, $update_sql)) {
+            header("Location: ../views/propietarios.php");
+            exit();
+        } else {
+            echo "Error al actualizar los datos: " . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -54,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Modificar propietario</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
+    <script src="../validaciones/js/validacion.js"></script>
 </head>
 <body class="body_forms">
 <div id="form-ui">
@@ -70,19 +104,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="input-area">
                 <div class="form-inp">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?php echo htmlspecialchars($propietario['Nombre'] ?? ''); ?>" required>
+                    <input type="text" name="nombre" id="mod_propietario_nombre" value="<?php echo htmlspecialchars($propietario['Nombre'] ?? ''); ?>" required onblur="validarNombrePropietarioMod()">
+                    <p id="errorModNombrePropietario"><?php echo $errores['nombre'] ?? ''; ?></p>
                 </div>
                 <div class="form-inp">
                     <label>Dirección</label>
-                    <input type="text" name="direccion" value="<?php echo htmlspecialchars($propietario['Direccion'] ?? ''); ?>">
+                    <input type="text" name="direccion" id="mod_propietario_direccion" value="<?php echo htmlspecialchars($propietario['Direccion'] ?? ''); ?>" onblur="validarDireccionPropietarioMod()">
+                    <p id="errorModDireccionPropietario"><?php echo $errores['direccion'] ?? ''; ?></p>
                 </div>
                 <div class="form-inp">
                     <label>Teléfono</label>
-                    <input type="text" name="telefono" value="<?php echo htmlspecialchars($propietario['Telefono'] ?? ''); ?>" required>
+                    <input type="text" name="telefono" id="mod_propietario_telefono" value="<?php echo htmlspecialchars($propietario['Telefono'] ?? ''); ?>" required onblur="validarTelefonoPropietarioMod()">
+                    <p id="errorModTelefonoPropietario"><?php echo $errores['telefono'] ?? ''; ?></p>
                 </div>
                 <div class="form-inp">
                     <label>Email</label>
-                    <input type="text" name="email" value="<?php echo htmlspecialchars($propietario['Email'] ?? ''); ?>">
+                    <input type="text" name="email" id="mod_propietario_email" value="<?php echo htmlspecialchars($propietario['Email'] ?? ''); ?>" onblur="validarEmailPropietarioMod()">
+                    <p id="errorModEmailPropietario"><?php echo $errores['email'] ?? ''; ?></p>
                 </div>
             </div>
             <div id="submit-button-cvr">

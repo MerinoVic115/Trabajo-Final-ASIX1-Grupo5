@@ -11,16 +11,36 @@ if (!isset($_SESSION['username'])) {
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
-// Consulta para obtener las mascotas
-$query = "SELECT Chip, Nombre, Sexo, Fecha_Nacimiento, Especie FROM mascota";
+// Filtros
+$filtroSexo = isset($_GET['sexo']) ? $_GET['sexo'] : '';
+$filtroEspecie = isset($_GET['especie']) ? $_GET['especie'] : '';
+
+// Construir la consulta con filtros
+$where = [];
+if ($filtroSexo !== '' && in_array($filtroSexo, ['M', 'H'])) {
+    $where[] = "Sexo = '" . mysqli_real_escape_string($conn, $filtroSexo) . "'";
+}
+if ($filtroEspecie !== '' && in_array($filtroEspecie, ['Perro', 'Gato'])) {
+    $where[] = "Especie = '" . mysqli_real_escape_string($conn, $filtroEspecie) . "'";
+}
+$whereSql = '';
+if (!empty($where)) {
+    $whereSql = 'WHERE ' . implode(' AND ', $where);
+}
+
+$query = "SELECT Chip, Nombre, Sexo, Fecha_Nacimiento, Especie FROM mascota $whereSql";
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
 $mascotas = [];
+$numResultados = 0;
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $mascotas[] = $row;
     }
+    $numResultados = count($mascotas);
+} else {
+    $numResultados = 0;
 }
 ?>
 <!DOCTYPE html>
@@ -45,6 +65,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <li><a href="historial.php">Historial</a></li>
                     <li><a href="propietarios.php">Propietarios</a></li>
                     <li><a href="raza.php">Raza</a></li>
+                    <li><a href="especialidad.php">Especialidad</a></li>
                     <li><a href="noticias.php">Noticias</a></li>
                 </ul>
             </nav>
@@ -53,15 +74,32 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
-                        <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
+                        <strong>Bienvenido</strong>, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                        <a href="../views/logout.php" class="btn-cerrar-ses">Cerrar sesión</a>
                     </div>
                 </nav>
-
-                    <br>
-                
+                <br>
+                <!-- Filtros -->
+                <form method="get" style="margin-bottom: 20px; display: flex; gap: 20px; align-items: center;">
+                    <label for="sexo">Sexo:</label>
+                    <select name="sexo" id="sexo">
+                        <option value="">Todos</option>
+                        <option value="M" <?php if ($filtroSexo === 'M') echo 'selected'; ?>>Macho</option>
+                        <option value="H" <?php if ($filtroSexo === 'H') echo 'selected'; ?>>Hembra</option>
+                    </select>
+                    <label for="especie">Especie:</label>
+                    <select name="especie" id="especie">
+                        <option value="">Todas</option>
+                        <option value="Perro" <?php if ($filtroEspecie === 'Perro') echo 'selected'; ?>>Perro</option>
+                        <option value="Gato" <?php if ($filtroEspecie === 'Gato') echo 'selected'; ?>>Gato</option>
+                    </select>
+                    <button type="submit">Filtrar</button>
+                    <a href="mascotas.php" style="margin-left:10px;">Quitar filtros</a>
+                </form>
+                <div style="margin-bottom: 10px;">
+                    <strong>Número de resultados: <?= $numResultados ?></strong>
+                </div>
                 <h1>Listado de Mascotas</h1>
-                
                 <table class="table">
                     <thead>
                         <tr>
@@ -77,7 +115,13 @@ if ($result && mysqli_num_rows($result) > 0) {
                             <?php foreach ($mascotas as $mascota): ?>
                                 <tr>
                                     <td><?= htmlspecialchars($mascota['Nombre']); ?></td>
-                                    <td><?= htmlspecialchars($mascota['Sexo']); ?></td>
+                                    <td>
+                                        <?php
+                                            if ($mascota['Sexo'] === 'M') echo 'Macho';
+                                            elseif ($mascota['Sexo'] === 'H') echo 'Hembra';
+                                            else echo htmlspecialchars($mascota['Sexo']);
+                                        ?>
+                                    </td>
                                     <td><?= date('d/m/Y', strtotime($mascota['Fecha_Nacimiento'])); ?></td>
                                     <td><?= htmlspecialchars($mascota['Especie']); ?></td>
                                     <td class="actions">
@@ -108,7 +152,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
             </main>
             <footer class="footer">
-                <p>© 2023 Vetis Andalucía - Todos los derechos reservados</p>
+                <p>© 2025 Vetis Andalucía - Todos los derechos reservados</p>
                 <p>Información confidencial - Uso interno exclusivo</p>
             </footer>
         </div>

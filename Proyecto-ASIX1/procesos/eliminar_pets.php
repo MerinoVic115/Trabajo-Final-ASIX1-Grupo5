@@ -3,7 +3,11 @@
 <?php
 
 include "../conexion/conexion.php";
-
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 if (isset($_GET['Chip']) && !empty($_GET['Chip'])) {
     $chip = $_GET['Chip'];
 

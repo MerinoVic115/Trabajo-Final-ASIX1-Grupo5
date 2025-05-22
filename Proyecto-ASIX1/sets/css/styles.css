@@ -22,6 +22,8 @@ body {
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
+  /* gap entre columnas reducido */
+  gap: 12px;
 }
 
 .content-area {
@@ -31,10 +33,13 @@ body {
   min-width: 0;
   background: #fff;
   box-sizing: border-box;
+  /* Elimina padding lateral si hay, para juntar más los cubos */
+  padding: 0;
 }
+
 .main-content {
   flex: 1 0 auto;
-  padding: 40px 32px 0 32px;
+  padding: 32px 12px 0 12px; /* Reduce padding lateral */
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -256,18 +261,6 @@ i {
   border-radius: 5px;
 }
 
-.register-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 
 /* sidebar.css */
 .sidebar {
@@ -292,7 +285,7 @@ i {
   width: 100%;
 }
 .sidebar nav ul li {
-  margin: 15px; /* <-- Esto aplica un margen vertical de 20px arriba y abajo */
+  margin: 20px 0;
   text-align: center;
 }
 .sidebar nav ul li a {
@@ -463,163 +456,7 @@ i {
 }
 
 
-
-/* FORMULARIOS */
-
-/* .body_forms {
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(120deg, #161616 0%, #5cffb0 100%);
-    background-size: 200% 200%;
-    animation: gradientMove 6s ease-in-out infinite;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-@keyframes gradientMove {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-#form-ui {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-    width: 100vw;
-}
-#form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 340px;
-    min-height: 500px;
-    padding: 32px 28px;
-    background-color: #161616ee;
-    box-shadow: 0px 15px 60px #00FF7F, 0 2px 16px #0008;
-    outline: 1.5px solid #2b9962;
-    border-radius: 16px;
-    margin: 0 auto;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-#form-body {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 320px;
-}
-#welcome-lines {
-    text-align: center;
-    line-height: 1.1;
-}
-#welcome-line-1 {
-    color: #00FF7F;
-    font-weight: 700;
-    font-size: 2.2rem;
-    margin-bottom: 4px;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-#welcome-line-2 {
-    color: #ffffff;
-    font-size: 1.1rem;
-    margin-top: 10px;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-#input-area {
-    margin-top: 28px;
-}
-.form-inp {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 18px;
-}
-.form-inp label {
-    color: #00FF7F;
-    font-size: 15px;
-    margin-bottom: 4px;
-    font-weight: 600;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-.form-inp input {
-    padding: 10px 12px;
-    border: 1px solid #e5e3e3;
-    border-radius: 8px;
-    background: #222;
-    color: #00FF7F;
-    font-size: 14px;
-    outline: none;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-.form-inp input:focus {
-    border: 1.5px solid #00FF7F;
-    background: #161616;
-}
-#submit-button-cvr {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-}
-#submit-button {
-    display: block;
-    width: 100%;
-    color: #00FF7F;
-    background-color: transparent;
-    font-weight: 600;
-    font-size: 15px;
-    margin: 0;
-    padding: 14px 13px 12px 13px;
-    border: 0;
-    outline: 1px solid #00FF7F;
-    border-radius: 8px;
-    line-height: 1;
-    cursor: pointer;
-    transition: all ease-in-out .3s;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-#submit-button:hover {
-    background-color: #00FF7F;
-    color: #161616;
-}
-.btn-back {
-    background: #00FF7F;
-    color: #161616;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 22px;
-    font-size: 1rem;
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-weight: 600;
-    box-shadow: 0 2px 12px #00FF7F33;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    outline: none;
-    margin: 0 auto;
-    display: block;
-}
-.btn-back:hover {
-    background: #161616;
-    color: #00FF7F;
-    box-shadow: 0 4px 18px #00FF7F55;
-    border: 1.5px solid #00FF7F;
-}
-@media (max-width: 600px) {
-    #form, #form-body {
-        width: 98vw;
-        min-width: unset;
-        max-width: 98vw;
-        padding: 12px 4vw;
-    }
-} */
-
-
-
-
-
-
+/* Formulario de registro */
 
 .body_forms {
   font-family: 'Arial', sans-serif;
@@ -753,3 +590,1589 @@ select:focus {
 .btn-back:hover {
   background-color: #e0e0e0;
 }
+
+.btn-cerrar-ses {
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #198754; /* igual que el fondo del sidebar */
+  color: #fff !important;
+  border: none;
+  border-radius: 8px;
+  padding: 0 32px;
+  height: 20px;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 12px 0 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+  min-width: 150px;
+  max-width: 200px;
+}
+
+.btn-cerrar-ses:hover {
+  background-color: #13512d; /* igual que el menú activo */
+  color: #fff !important;
+}
+
+/* Responsive: ajusta el botón para que siempre coincida con el alto del contenedor */
+@media (max-width: 700px) {
+  .btn-cerrar-ses {
+    height: 40px;
+    font-size: 15px;
+    padding: 0 18px;
+    min-width: 110px;
+    max-width: 100%;
+    margin: 8px 6px 0 0;
+  }
+}
+
+@media (max-width: 430px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  html, body {
+    font-size: 15px;
+  }
+  .layout-container {
+    flex-direction: column;
+    gap: 0;
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    padding: 10px 0 0 0;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: none;
+    z-index: 10;
+    background: #198754;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+  .sidebar nav ul li {
+    margin: 0 6px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+  }
+  .sidebar nav ul li a {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    white-space: nowrap;
+  }
+  .sidebar nav ul li img {
+    width: 60px !important;
+    height: 60px !important;
+    margin: 0 8px 0 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .content-area {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 70px;
+  }
+  .main-content {
+    padding: 12px 2vw 0 2vw;
+    font-size: 15px;
+  }
+  .footer {
+    left: 0;
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 10px 0 8px 0;
+    position: static;
+    margin-top: 10px;
+  }
+  .register-box {
+    width: 98%;
+    left: 1%;
+    transform: none;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .register-box a {
+    font-size: 13px;
+    padding: 7px 10px;
+    margin-top: 20px;
+  }
+  .table,
+  th, td {
+    font-size: 13px;
+    padding: 6px;
+  }
+  .btn-action {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .btn-acciones {
+    gap: 5px;
+  }
+  #form-ui {
+    max-width: 98vw;
+    padding: 0;
+  }
+  #form {
+    padding: 10px 2vw;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  #welcome-lines {
+    margin-bottom: 18px;
+  }
+  #welcome-line-1 {
+    font-size: 20px;
+  }
+  #welcome-line-2 {
+    font-size: 13px;
+  }
+  .form-inp {
+    margin-bottom: 14px;
+  }
+  label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="date"],
+  input[type="number"],
+  input[type="email"],
+  select {
+    font-size: 13px;
+    padding: 9px;
+  }
+  #submit-button-cvr {
+    margin-top: 18px;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #submit-button,
+  .btn-back {
+    font-size: 13px;
+    padding: 8px 10px;
+    margin-right: 0;
+  }
+  .btn-cerrar-ses {
+    position: static;
+    display: inline-block;
+    margin: 10px 0 0 0;
+    font-size: 13px;
+    padding: 6px 10px;
+    /* float: right; */
+  }
+  .main-content_noticias {
+    padding: 12px 2vw 0 2vw;
+  }
+  .news-container_noticias {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .news-card_noticias {
+    margin: 0 auto;
+    width: 98%;
+  }
+  .news-image_noticias {
+    width: 100%;
+    height: auto;
+  }
+  .footer_noticias {
+    font-size: 0.85rem;
+    padding: 10px 0;
+  }
+}
+

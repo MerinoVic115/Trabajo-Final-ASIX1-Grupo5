@@ -31,6 +31,7 @@
           <li><a href="historial.php">Historial</a></li>
           <li><a href="propietarios.php">Propietarios</a></li>
           <li><a href="raza.php">Raza</a></li>
+          <li><a href="especialidad.php">Especialidad</a></li>
           <li><a href="noticias.php">Noticias</a></li>
         </ul>
       </nav>
@@ -132,7 +133,7 @@
         </div>
       </main>
       <footer class="footer bg-white border-top text-center py-1 mt-auto">
-        <p class="mb-0 small">© 2023 Vetis Andalucía - Todos los derechos reservados - Información confidencial - Uso interno exclusivo</p>
+        <p class="mb-0 small">© 2025 Vetis Andalucía - Todos los derechos reservados - Información confidencial - Uso interno exclusivo</p>
       </footer>
     </div>
   </div>

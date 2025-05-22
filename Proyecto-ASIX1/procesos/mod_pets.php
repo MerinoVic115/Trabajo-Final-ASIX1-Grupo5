@@ -4,7 +4,7 @@
 include "../conexion/conexion.php";
 session_start();
 
-// // Verificar si el usuario está autenticado
+// Verificar si el usuario está autenticado
 if (!isset($_SESSION['username'])) {
     header("Location: ../views/login.php");
     exit();
@@ -28,21 +28,55 @@ if (!$mascota) {
     exit();
 }
 
-// Procesar el formulario si se envía
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = mysqli_real_escape_string($conn, $_POST['nombre']);
-    $sexo = mysqli_real_escape_string($conn, $_POST['genero']);
-    $especie = mysqli_real_escape_string($conn, $_POST['especie']);
-    $raza = mysqli_real_escape_string($conn, $_POST['raza']);
+// Obtener razas para el select
+$razas = [];
+$resRaza = mysqli_query($conn, "SELECT Id_Raza, Nombre FROM raza");
+while ($row = mysqli_fetch_assoc($resRaza)) {
+    $razas[] = $row;
+}
 
-    // CORREGIDO: Elimina la coma antes de WHERE
-    $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Especie = '$especie' WHERE Chip = $id";
-    if (mysqli_query($conn, $update_sql)) {
-        echo "Datos actualizados correctamente.";
-        header("Location:   ../views/mascotas.php"); // Redirigir a una página de éxito
-        exit();
-    } else {
-        echo "Error al actualizar los datos: " . mysqli_error($conn);
+
+
+// Validaciones PHP
+$errores = [];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = $_POST['nombre'];
+    $sexo = $_POST['genero'];
+    $raza = $_POST['raza'];
+
+    // Validación PHP para Nombre
+    if (!$nombre || strlen($nombre) < 2) {
+        $errores['nombre'] = "El nombre es obligatorio y debe tener al menos 2 caracteres.";
+    } elseif (preg_match('/\d/', $nombre)) {
+        $errores['nombre'] = "El nombre no puede contener números.";
+    }
+
+    // Validación PHP para Sexo
+    if (!$sexo) {
+        $errores['sexo'] = "El sexo es obligatorio.";
+    } elseif ($sexo !== "M" && $sexo !== "F") {
+        $errores['sexo'] = "El sexo debe ser 'M' para Macho o 'F' para Hembra.";
+    }
+
+    // Validación PHP para Raza
+    if (!$raza) {
+        $errores['raza'] = "La raza es obligatoria.";
+    }
+
+    // Solo actualizar si no hay errores
+    if (empty($errores)) {
+        $nombre = mysqli_real_escape_string($conn, $nombre);
+        $sexo = mysqli_real_escape_string($conn, $sexo);
+        $raza = mysqli_real_escape_string($conn, $raza);
+
+        $update_sql = "UPDATE mascota SET Nombre = '$nombre', Sexo = '$sexo', Raza = '$raza' WHERE Chip = $id";
+        if (mysqli_query($conn, $update_sql)) {
+            // No imprimir nada antes del header
+            header("Location: ../views/mascotas.php");
+            exit();
+        } else {
+            echo "Error al actualizar los datos: " . mysqli_error($conn);
+        }
     }
 }
 ?>
@@ -55,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Formulario de modificación de mascota</title>
     <link rel="stylesheet" type="text/css" href="../sets/css/styles.css">
-    <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="../validaciones/js/validacion.js"></script>
 </head>
@@ -71,32 +104,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="input-area">
                 <div class="form-inp">
                     <label>Nombre</label>
-                    <input type="text" name="nombre" value="<?php echo $mascota['Nombre']; ?>" required placeholder="Nombre de la mascota"
+                    <input type="text" name="nombre" id="nombremodpets" value="<?php echo htmlspecialchars($mascota['Nombre']); ?>" required placeholder="Nombre de la mascota"
                         oninput="validarNombreMascotaMod()" onblur="validarNombreMascotaMod()">
-                    <p id="errorNombreMascota"></p>
+                    <p id="errorNombreMascotaMod"><?php echo isset($errores['nombre']) ? $errores['nombre'] : ''; ?></p>
                 </div>
-                
                 <div class="form-inp">
                     <label>Sexo</label>
-                    <input type="text" name="genero" value="<?php echo $mascota['Sexo']; ?>" placeholder="Sexo de la mascota"
+                    <input type="text" name="genero" id="sexomodpets" value="<?php echo htmlspecialchars($mascota['Sexo']); ?>" placeholder="Sexo de la mascota"
                         oninput="validarSexoMascotaMod()" onblur="validarSexoMascotaMod()">
-                    <p id="errorSexoMascota"></p>
+                    <p id="errorSexoMascotaMod"><?php echo isset($errores['sexo']) ? $errores['sexo'] : ''; ?></p>
                 </div>
-                
                 <div class="form-inp">
                     <label>Raza</label>
-                    <select name="veterinario" required>
+                    <select name="raza" id="razamodpets" required
+                        oninput="validarRazaMascotaMod()" onblur="validarRazaMascotaMod()">
                         <option value="">Seleccionar raza</option>
-                        <?php foreach ($veterinarios as $v): 
-                            $selected = (isset($histo['veterinario']) && $histo['veterinario'] == $v['Id_raza']) ? 'selected' : '';
+                        <?php foreach ($razas as $r): 
+                            $selected = ($mascota['Raza'] == $r['Id_Raza']) ? 'selected' : '';
                         ?>
-                            <option value="<?php echo $v['Id_raza']; ?>" <?php echo $selected; ?>>
-                                <?php echo htmlspecialchars($v['Nombre']); ?>
+                            <option value="<?php echo $r['Id_Raza']; ?>" <?php echo $selected; ?>>
+                                <?php echo htmlspecialchars($r['Nombre']); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
+                    <p id="errorRazaMascotaMod"><?php echo isset($errores['raza']) ? $errores['raza'] : ''; ?></p>
                 </div>
-                
             </div>
             <div id="submit-button-cvr">
                 <button id="submit-button" type="submit">Guardar cambios</button>

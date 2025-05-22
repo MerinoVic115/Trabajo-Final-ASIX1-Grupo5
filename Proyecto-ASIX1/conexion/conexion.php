@@ -16,4 +16,45 @@ if (!$conn) {
 
 }
 
+
+// DELIMITER $$
+
+// CREATE TRIGGER nombre_del_trigger
+// [timing] [evento]
+// ON nombre_de_la_tabla
+// FOR EACH ROW
+// BEGIN
+//     -- Aquí va el código que quieres que se ejecute
+// END$$
+
+// DELIMITER ;
+// DELIMITER $$
+
+// CREATE TRIGGER check_salario
+// BEFORE INSERT
+// ON emp
+// FOR EACH ROW
+// BEGIN
+//     IF NEW.salario < 1000 THEN
+//         SIGNAL SQLSTATE '45000'
+//         SET MESSAGE_TEXT = 'El salario no puede ser menor a 1000';
+//     END IF;
+// END$$
+
+// DELIMITER ;
+// nombre_del_trigger: el nombre que le des al trigger.
+
+// timing: puede ser BEFORE o AFTER (antes o después del evento).
+
+// evento: puede ser INSERT, UPDATE o DELETE.
+
+// nombre_de_la_tabla: la tabla donde se aplicará el trigger.
+
+// FOR EACH ROW: el trigger se ejecuta para cada fila afectada.
+
+// Dentro del BEGIN...END: colocas el código que se ejecutará.
+
+
 ?>
+
+

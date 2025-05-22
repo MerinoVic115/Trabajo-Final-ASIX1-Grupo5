@@ -11,6 +11,41 @@ if (!isset($_SESSION['username'])) {
 // Incluimos la conexión después de verificar la sesión
 include "../conexion/conexion.php";
 
+// Filtros
+$filtroIngresado = isset($_GET['ingresado']) ? $_GET['ingresado'] : '';
+$filtroVeterinario = isset($_GET['veterinario']) ? $_GET['veterinario'] : '';
+$filtroNombreMascota = isset($_GET['nombre_mascota']) ? trim($_GET['nombre_mascota']) : '';
+
+// Obtener opciones de veterinarios para el filtro
+$veterinariosFiltro = [];
+$resVetFiltro = mysqli_query($conn, "SELECT DISTINCT v.Id_Vet, v.Nombre FROM veterinario v ORDER BY v.Nombre ASC");
+while ($row = mysqli_fetch_assoc($resVetFiltro)) {
+    $veterinariosFiltro[] = $row;
+}
+
+// Obtener opciones de mascotas para el filtro
+$mascotasFiltro = [];
+$resMascFiltro = mysqli_query($conn, "SELECT DISTINCT m.Chip, m.Nombre FROM mascota m ORDER BY m.Nombre ASC");
+while ($row = mysqli_fetch_assoc($resMascFiltro)) {
+    $mascotasFiltro[] = $row;
+}
+
+// Construir WHERE dinámico
+$where = [];
+if ($filtroIngresado !== '' && in_array($filtroIngresado, ['Sí', 'No'])) {
+    $where[] = "h.ingresado_his = '" . mysqli_real_escape_string($conn, $filtroIngresado) . "'";
+}
+if ($filtroVeterinario !== '' && ctype_digit($filtroVeterinario)) {
+    $where[] = "v.Id_Vet = '" . mysqli_real_escape_string($conn, $filtroVeterinario) . "'";
+}
+if ($filtroNombreMascota !== '') {
+    $where[] = "m.Nombre LIKE '%" . mysqli_real_escape_string($conn, $filtroNombreMascota) . "%'";
+}
+$whereSql = '';
+if (!empty($where)) {
+    $whereSql = 'WHERE ' . implode(' AND ', $where);
+}
+
 // Consulta para obtener cada historial junto con el nombre de la mascota, raza y veterinario asignado
 $query = "SELECT 
     h.id_historial,
@@ -24,9 +59,10 @@ $query = "SELECT
 FROM historial h
 INNER JOIN mascota m ON h.mascota = m.Chip
 INNER JOIN raza r ON m.Raza = r.Id_Raza
-INNER JOIN veterinario v ON h.veterinario = v.Id_Vet;
+INNER JOIN veterinario v ON h.veterinario = v.Id_Vet
+$whereSql
+ORDER BY h.id_historial DESC
 ";
-
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
@@ -58,6 +94,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <li style="background-color: #13512d; border-radius: 15px"><a href="historial.php">Historial</a></li>
                     <li><a href="propietarios.php">Propietarios</a></li>
                     <li><a href="raza.php">Raza</a></li>
+                    <li><a href="especialidad.php">Especialidad</a></li>
                     <li><a href="noticias.php">Noticias</a></li>
                 </ul>
             </nav>
@@ -66,15 +103,41 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
-                        <a href="logout.php" style="float: right;">Cerrar sesión</a>
+                        <strong>Bienvenido</strong>, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
+                        <a href="logout.php" class="btn-cerrar-ses">Cerrar sesión</a>
                     </div>
                 </nav>
-
-                    <br>
-                
+                <br>
+                <!-- Filtros en una sola línea -->
+                <form method="get" style="margin-bottom: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <label for="nombre_mascota">Mascota:</label>
+                    <select name="nombre_mascota" id="nombre_mascota" style="width: 180px;">
+                        <option value="">Todas</option>
+                        <?php foreach ($mascotasFiltro as $masc): ?>
+                            <option value="<?= htmlspecialchars($masc['Nombre']) ?>" <?php if ($filtroNombreMascota == $masc['Nombre']) echo 'selected'; ?>>
+                                <?= htmlspecialchars($masc['Nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="veterinario">Veterinario asignado:</label>
+                    <select name="veterinario" id="veterinario" style="width: 180px;">
+                        <option value="">Todos</option>
+                        <?php foreach ($veterinariosFiltro as $vet): ?>
+                            <option value="<?= $vet['Id_Vet'] ?>" <?php if ($filtroVeterinario == $vet['Id_Vet']) echo 'selected'; ?>>
+                                <?= htmlspecialchars($vet['Nombre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                    <label for="ingresado">Ingresado:</label>
+                    <select name="ingresado" id="ingresado" style="width: 120px;">
+                        <option value="">Todos</option>
+                        <option value="Sí" <?php if ($filtroIngresado === 'Sí') echo 'selected'; ?>>Sí</option>
+                        <option value="No" <?php if ($filtroIngresado === 'No') echo 'selected'; ?>>No</option>
+                    </select>
+                    <button type="submit">Filtrar</button>
+                    <a href="historial.php" style="margin-left:10px;">Quitar filtros</a>
+                </form>
                 <h1>Listado de Historial</h1>
-                
                 <table class="table">
                     <thead>
                         <tr>
@@ -103,14 +166,14 @@ if ($result && mysqli_num_rows($result) > 0) {
                                         <a href="../procesos/mod_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-edit" >
                                             <i class="fa-solid fa-pen-to-square" ></i></a>
                                         <a href="../procesos/eliminar_histo.php?id_historial=<?= $histo['id_historial']; ?>" class="btn-action btn-delete" 
-                                            onclick="return confirm('¿Estás seguro de que deseas eliminar a este historial?');">
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                                             <i class="fa-solid fa-trash-can"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="6" style="text-align: center;">No hay historiales registrados</td>
+                                <td colspan="8" style="text-align: center;">No hay historiales registrados</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
@@ -127,7 +190,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
             </main>
             <footer class="footer">
-                <p>© 2023 Vetis Andalucía - Todos los derechos reservados</p>
+                <p>© 2025 Vetis Andalucía - Todos los derechos reservados</p>
                 <p>Información confidencial - Uso interno exclusivo</p>
             </footer>
         </div>

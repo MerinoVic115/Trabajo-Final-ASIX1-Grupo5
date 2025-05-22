@@ -4,10 +4,11 @@
 
 include "../conexion/conexion.php";
 
-// if (!isset($_SESSION['username'])) {
-//     header("Location: ../views/login.php");
-//     exit();
-// }
+session_start();
+if (!isset($_SESSION['username'])) {
+    header("Location: ../views/login.php");
+    exit();
+}
 
 if (isset($_GET['DNI']) && !empty($_GET['DNI'])) {
     $idpro = $_GET['DNI'];

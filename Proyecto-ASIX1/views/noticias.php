@@ -26,6 +26,7 @@ if (!isset($_SESSION['username'])) {
                 <li><a href="historial.">Historial</a></li>
                 <li><a href="propietarios.php">Propietarios</a></li>
                 <li><a href="raza.php">Raza</a></li>
+                <li><a href="especialidad.php">Especialidad</a></li>
                 <li style="background-color: #13512d; border-radius: 15px"><a href="noticias.php">Noticias</a></li>
                 </ul>
             </nav>
@@ -35,7 +36,7 @@ if (!isset($_SESSION['username'])) {
                     <nav>
                         <div style="padding: 10px; background: #f1f1f1;">
                             Bienvenido, <?php echo $_SESSION['username'] ?? 'Usuario'; ?>
-                            <a href="logout.php" style="float: right;">Cerrar sesión</a>
+                            <a href="logout.php" class="btn-cerrar-ses">Cerrar sesión</a>
                         </div>
                     </nav>
 
@@ -105,7 +106,7 @@ if (!isset($_SESSION['username'])) {
                     <img src="../sets/img/vacuna-felina.png" alt="Vacunación felina" class="news-image_noticias">
                     <div class="news-content_noticias">
                         <h2 class="news-title_noticias">Nueva vacuna exclusiva para enfermedades felinas</h2>
-                        <p class="news-date_noticias">5 de octubre, 2025</p>
+                        <p class="news-date_noticias">5 de mayo, 2025</p>
                         <p>Vetis Andalucía presenta la primera vacuna contra el síndrome respiratorio felino complejo, con un 98% de efectividad comprobada en pruebas clínicas.</p>
                         <p>El tratamiento ya está disponible en todas nuestras clínicas y ha demostrado reducir los casos graves en un 75% durante el periodo de pruebas.</p>
                     </div>

@@ -44,6 +44,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <li><a href="historial.php">Historial</a></li>
                     <li style="background-color: #13512d; border-radius: 15px"><a href="propietarios.php">Propietarios</a></li>
                     <li><a href="raza.php">Raza</a></li>
+                    <li><a href="especialidad.php">Especialidad</a></li>
                     <li><a href="noticias.php">Noticias</a></li>
                 </ul>
             </nav>
@@ -52,8 +53,8 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
-                        <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
+                        <strong>Bienvenido</strong>, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                        <a href="../views/logout.php" class="btn-cerrar-ses">Cerrar sesión</a>
                     </div>
                 </nav>
 
@@ -112,7 +113,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 
             </main>
             <footer class="footer">
-                <p>© 2023 Vetis Andalucía - Todos los derechos reservados</p>
+                <p>© 2025 Vetis Andalucía - Todos los derechos reservados</p>
                 <p>Información confidencial - Uso interno exclusivo</p>
             </footer>
         </div>

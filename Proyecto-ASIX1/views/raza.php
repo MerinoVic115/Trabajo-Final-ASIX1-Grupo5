@@ -12,7 +12,7 @@ if (!isset($_SESSION['username'])) {
 include "../conexion/conexion.php";
 
 // Consulta para obtener la raza
-$query = "SELECT Id_raza, Nombre, Altura, Peso, Caracter FROM raza";
+$query = "SELECT Id_Raza, Nombre, Altura, Peso, Caracter FROM raza";
 $result = mysqli_query($conn, $query);
 
 // Almacenamos los resultados
@@ -44,6 +44,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <li><a href="historial.php">Historial</a></li>
                     <li><a href="propietarios.php">Propietarios</a></li>
                     <li style="background-color: #13512d; border-radius: 15px"><a href="raza.php">Raza</a></li>
+                    <li><a href="especialidad.php">Especialidad</a></li>
                     <li><a href="noticias.php">Noticias</a></li>
                 </ul>
             </nav>
@@ -52,8 +53,8 @@ if ($result && mysqli_num_rows($result) > 0) {
             <main class="main-content">
                 <nav>
                     <div style="padding: 10px; background: #f1f1f1;">
-                        Bienvenido, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
-                        <a href="../views/logout.php" style="float: right;">Cerrar sesión</a>
+                        <strong>Bienvenido</strong>, <?php echo htmlspecialchars($_SESSION['username'] ?? 'Usuario'); ?>
+                        <a href="../views/logout.php" class="btn-cerrar-ses">Cerrar sesión</a>
                     </div>
                 </nav>
 
@@ -82,10 +83,10 @@ if ($result && mysqli_num_rows($result) > 0) {
                                     <td><?= htmlspecialchars($raza['Caracter']); ?></td>
 
                                     <td class="actions">
-                                <a href="../procesos/mod_raza.php?Id_raza=<?php echo $raza['Id_raza']; ?>" class="btn-action btn-edit">
+                                <a href="../procesos/mod_raza.php?Id_Raza=<?php echo $raza['Id_Raza']; ?>" class="btn-action btn-edit">
                                     <i class="fa-solid fa-pen-to-square" ></i></a>
-                                <a href="../procesos/eliminar_raza.php?Id_raza=<?php echo $raza['Id_raza']; ?>" class="btn-action btn-delete" 
-                                   onclick="return confirm('¿Estás seguro de que deseas eliminar a este veterinario?');">
+                                <a href="../procesos/eliminar_raza.php?Id_Raza=<?php echo $raza['Id_Raza']; ?>" class="btn-action btn-delete" 
+                                   onclick="return confirm('¿Estás seguro de que deseas eliminar a esta raza?');">
                                    <i class="fa-solid fa-trash-can"></i></a>
                             </td>
                                 </tr>
@@ -98,18 +99,18 @@ if ($result && mysqli_num_rows($result) > 0) {
                     </tbody>
                 </table>
 
-                <div class="register-box">
-                <a href="../procesos/crear_raza.php">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    Registrar una raza
-                </a>
-            </div>
+                <div class="register-box" style="margin-bottom: 40px;">
+                    <a href="../procesos/crear_raza.php">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Registrar una raza
+                    </a>
+                </div>
             </main>
             <footer class="footer">
-                <p>© 2023 Vetis Andalucía - Todos los derechos reservados</p>
+                <p>© 2025 Vetis Andalucía - Todos los derechos reservados</p>
                 <p>Información confidencial - Uso interno exclusivo</p>
             </footer>
         </div>
